@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import s from './Categories.module.scss';
+import s from './categories.module.scss';
 
 const Categories = () => {
   const [activeCategory, setActiveCategory] = useState(1);
