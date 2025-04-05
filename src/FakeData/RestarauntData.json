@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "name": "Название ресторана",
+    "rating": 4.5,
+    "deliveryTime": "30-45 мин",
+    "cuisine": "Итальянская, Европейская",
+    "distance": "1.2 км",
+    "imageUrl": "https://avatars.mds.yandex.net/get-altay/12594487/2a0000018fe97a87a3950dd2ec8d2368c60a/L",
+    "menu": [
+      { "id": 1, "name": "Пицца Маргарита", "price": 600, "weight": "350г" },
+      { "id": 2, "name": "Лазанья", "price": 750, "weight": "450г" },
+      { "id": 3, "name": "Тирамису", "price": 400, "weight": "200г" },
+      { "id": 4, "name": "Спагетти Карбонара", "price": 800, "weight": "300г" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Суши Вок",
+    "rating": 4.7,
+    "deliveryTime": "20-30 мин",
+    "cuisine": "Японская, Азиатская",
+    "distance": "0.8 км",
+    "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/d4/50/11/caption.jpg?w=600&h=400&s=1",
+    "menu": [
+      { "id": 1, "name": "Филадельфия", "price": 500, "weight": "250г" },
+      { "id": 2, "name": "Калифорния", "price": 450, "weight": "200г" },
+      { "id": 3, "name": "Ролл с угрем", "price": 600, "weight": "300г" },
+      { "id": 4, "name": "Мисо суп", "price": 300, "weight": "250г" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Бургер Клаб",
+    "rating": 4.3,
+    "deliveryTime": "25-40 мин",
+    "cuisine": "Американская, Фастфуд",
+    "distance": "1.5 км",
+    "imageUrl": "https://avatars.mds.yandex.net/get-altay/11398069/2a00000190eed550637f6288055886f53ac9/L",
+    "menu": [
+      { "id": 1, "name": "Чизбургер", "price": 400, "weight": "300г" },
+      { "id": 2, "name": "Бургер с беконом", "price": 500, "weight": "350г" },
+      { "id": 3, "name": "Картофель фри", "price": 200, "weight": "150г" },
+      { "id": 4, "name": "Шоколадный молочный коктейль", "price": 300, "weight": "400мл" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Тоскана",
+    "rating": 4.9,
+    "deliveryTime": "35-50 мин",
+    "cuisine": "Итальянская, Средиземноморская",
+    "distance": "3.2 км",
+    "imageUrl": "https://burobiz-a.akamaihd.net/uploads/images/85779/large_picceriya-kak-vid-biznesa.jpg",
+    "menu": [
+      { "id": 1, "name": "Паста с морепродуктами", "price": 900, "weight": "400г" },
+      { "id": 2, "name": "Цезарь с креветками", "price": 650, "weight": "350г" },
+      { "id": 3, "name": "Пицца Пепперони", "price": 700, "weight": "450г" },
+      { "id": 4, "name": "Брускетта", "price": 400, "weight": "200г" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Грузинский Двор",
+    "rating": 4.6,
+    "deliveryTime": "30-45 мин",
+    "cuisine": "Грузинская, Кавказская",
+    "distance": "1.8 км",
+    "imageUrl": "https://victoria-plaza.ru/upload/resize_cache/iblock/b5e/i61omzpbvqh901boqd9e35yxavxnin3l/870_502_1/Ph_AnnaBorodina-91.jpg",
+    "menu": [
+      { "id": 1, "name": "Хинкали", "price": 500, "weight": "500г" },
+      { "id": 2, "name": "Хачапури по-аджарски", "price": 600, "weight": "350г" },
+      { "id": 3, "name": "Шашлык из свинины", "price": 800, "weight": "400г" },
+      { "id": 4, "name": "Лобио", "price": 450, "weight": "300г" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Веган Хаб",
+    "rating": 4.4,
+    "deliveryTime": "20-35 мин",
+    "cuisine": "Веганская, Здоровая",
+    "distance": "1.1 км",
+    "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/8e/0c/de/eat-vegan-live-long.jpg?w=600&h=-1&s=1",
+    "menu": [
+      { "id": 1, "name": "Веганский бургер", "price": 550, "weight": "300г" },
+      { "id": 2, "name": "Салат с киноа", "price": 450, "weight": "250г" },
+      { "id": 3, "name": "Тофу с овощами", "price": 600, "weight": "350г" },
+      { "id": 4, "name": "Зеленый смузи", "price": 350, "weight": "400мл" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Мясной Рай",
+    "rating": 4.7,
+    "deliveryTime": "45-60 мин",
+    "cuisine": "Стейк-хаус, Европейская",
+    "distance": "2.5 км",
+    "imageUrl": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/8d/b1/a7/caption.jpg?w=900&h=500&s=1",
+    "menu": [
+      { "id": 1, "name": "Стейк Рибай", "price": 1500, "weight": "500г" },
+      { "id": 2, "name": "Говяжьи ребрышки", "price": 1200, "weight": "600г" },
+      { "id": 3, "name": "Картофель пюре", "price": 300, "weight": "200г" },
+      { "id": 4, "name": "Салат Цезарь", "price": 450, "weight": "300г" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Паста Бар",
+    "rating": 4.3,
+    "deliveryTime": "25-40 мин",
+    "cuisine": "Итальянская, Паста",
+    "distance": "1.3 км",
+    "imageUrl": "https://avatars.mds.yandex.net/get-altay/11401274/2a0000018d98a35adf98f8e08b49ff45a131/L",
+    "menu": [
+      { "id": 1, "name": "Пенне с соусом аррабиата", "price": 600, "weight": "350г" },
+      { "id": 2, "name": "Феттучини с грибами", "price": 700, "weight": "400г" },
+      { "id": 3, "name": "Ризотто с трюфелем", "price": 850, "weight": "300г" },
+      { "id": 4, "name": "Пицца Четыре сыра", "price": 750, "weight": "450г" }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Рыбный День",
+    "rating": 4.5,
+    "deliveryTime": "30-50 мин",
+    "cuisine": "Рыбная, Европейская",
+    "distance": "2.0 км",
+    "imageUrl": "https://static.sobaka.ru/images/image/01/66/70/10/_normal.jpg?v=1679949572",
+    "menu": [
+      { "id": 1, "name": "Уха", "price": 450, "weight": "350г" },
+      { "id": 2, "name": "Жареная рыба с картофелем", "price": 900, "weight": "500г" },
+      { "id": 3, "name": "Севиче", "price": 700, "weight": "300г" },
+      { "id": 4, "name": "Креветки на гриле", "price": 850, "weight": "400г" }
+    ]
+  }
+]

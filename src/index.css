@@ -1,0 +1,66 @@
+:root {
+  --primary-color: #a970e0;
+  --secondary-color: #c18ef0;
+  --wrapper-color: #fff;
+  --text-color-light: #000;
+  --bg-color: #ede7f6;
+  font-family: 'Nunito Sans', sans-serif;
+}
+body {
+  background: var(--bg-color);
+  line-height: 1;
+}
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  outline: none;
+  font-optical-sizing: auto;
+
+  font-style: normal;
+  box-sizing: border-box;
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+a,
+span,
+p,
+b,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 30px;
+}
+
+a {
+  text-decoration: none;
+}

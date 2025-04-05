@@ -1,0 +1,99 @@
+.container {
+  padding: 30px;
+
+  .searchTitle {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-bottom: 30px;
+
+    h1 {
+      margin-top: 5px;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--text-color-light);
+    }
+  }
+
+  .searchContainer {
+    display: flex;
+    gap: 12px;
+    max-width: 600px;
+  }
+
+  .searchInputWrapper {
+    width: 300px;
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .searchIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color-light);
+    opacity: 0.6;
+  }
+
+  .searchInput {
+    width: 100%;
+    padding: 12px 14px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(11, 99, 246, 0.2);
+    }
+
+    &::placeholder {
+      color: #999;
+    }
+  }
+
+  .searchButton {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--secondary-color);
+    }
+    span {
+      margin-top: 2px;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .arrowIcon {
+    transition: transform 0.3s ease;
+  }
+
+  .searchButton:hover .arrowIcon {
+    transform: translateX(2px);
+  }
+}
+
+.restaurantsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+}

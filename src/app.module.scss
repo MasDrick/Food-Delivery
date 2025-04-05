@@ -1,0 +1,13 @@
+.wrapper {
+  width: calc(100vw - 100px);
+  height: 100%;
+  background-color: var(--wrapper-color);
+  color: var(--text-color);
+  margin: 50px auto;
+  border-radius: 10px;
+  max-width: 1200px;
+
+  h1 {
+    color: var(--primary-color);
+  }
+}
