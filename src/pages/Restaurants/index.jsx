@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { Star, Clock, MapPin } from 'lucide-react';
+import { fetchRestaurantById } from '../../store/slices/restaurantSlice';
 import s from './RestaurantPage.module.scss';
 
-const Restaurants = ({ restaurants }) => {
-  const { id } = useParams(); // Получаем id из URL
-  const restaurant = restaurants.find((r) => r.id === Number(id)); // Находим ресторан по id
-  console.log(restaurant);
+const Restaurants = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { currentRestaurant, isLoading, error } = useSelector((state) => state.restaurants);
 
-  if (!restaurant) {
+  useEffect(() => {
+    dispatch(fetchRestaurantById(id));
+  }, [dispatch, id]);
+
+  if (isLoading) {
+    return <div className={s.container}>Загрузка...</div>;
+  }
+
+  if (error) {
+    return <div className={s.container}>Ошибка: {error}</div>;
+  }
+
+  if (!currentRestaurant) {
     return (
-      <div>
+      <div className={s.container}>
         <p>Ресторан не найден</p>
         <button onClick={() => window.history.back()}>Вернуться назад</button>
       </div>
     );
   }
 
+  // Handle different property names that might come from API vs local data
+  const restaurant = {
+    ...currentRestaurant,
+    image_url: currentRestaurant.image_url || currentRestaurant.imageUrl,
+    delivery_time: currentRestaurant.delivery_time || currentRestaurant.deliveryTime
+  };
+
   return (
     <div className={s.restaurantPage}>
       <div className={s.heroSection}>
-        <div className={s.heroImage} style={{ backgroundImage: `url(${restaurant.imageUrl})` }} />
+        <div className={s.heroImage} style={{ backgroundImage: `url(${restaurant.image_url})` }} />
         <div className={s.heroContent}>
           <h1 className={s.restaurantTitle}>{restaurant.name}</h1>
         </div>
@@ -31,19 +52,18 @@ const Restaurants = ({ restaurants }) => {
           </div>
           <div className={s.infoItem}>
             <Clock size={18} />
-            <span>{restaurant.deliveryTime}</span>
+            <span>{restaurant.delivery_time} мин</span>
           </div>
           <div className={s.infoItem}>
             <MapPin size={18} />
-            <span>{restaurant.distance}</span>
+            <span>{restaurant.distance} км</span>
           </div>
         </div>
       </div>
 
-      {/* Таблица с меню */}
       <div className={s.menuSection}>
         <h2 className={s.menuTitle}>Меню</h2>
-        {restaurant.menu.length > 0 ? (
+        {restaurant.menu && restaurant.menu.length > 0 ? (
           <table className={s.menuTable}>
             <thead>
               <tr>

@@ -1,0 +1,131 @@
+.registerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  padding: 20px;
+  position: relative;
+}
+
+/* Removing the logo container completely */
+/* .logoContainer {
+  display: flex;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 400px;
+  
+  img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .logoText {
+    display: none;
+  }
+} */
+
+.registerForm {
+  background: var(--wrapper-color);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--primary-color);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color-light);
+}
+
+.input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(169, 112, 224, 0.2);
+  }
+
+  &::placeholder {
+    color: #aaa;
+  }
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 15px;
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}
+
+.loginLink {
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.loginLinkText {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Адаптивность
+@media (max-width: 480px) {
+  .registerForm {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+}

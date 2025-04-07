@@ -38,7 +38,7 @@
 
   .searchInput {
     width: 100%;
-    padding: 12px 14px 10px 40px;
+    padding: 12px 40px 10px 14px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 16px;
@@ -55,16 +55,46 @@
     }
   }
 
+  .clearButton {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clearIcon {
+    color: var(--text-color-light);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  // Обновите стиль input, если нужно
+  .searchInput {
+    // существующие стили
+    transition: all 0.3s ease, padding-right 0.2s ease; // добавлен transition для padding-right
+  }
+
   .searchButton {
     display: flex;
     align-items: center;
     text-transform: uppercase;
-    gap: 8px;
-    padding: 10px 16px;
+    padding: 0 13px;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 8px;
+    // border-radius: 8px;
+    border-radius: 50%;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -80,14 +110,6 @@
     &:active {
       transform: scale(0.95);
     }
-  }
-
-  .arrowIcon {
-    transition: transform 0.3s ease;
-  }
-
-  .searchButton:hover .arrowIcon {
-    transform: translateX(2px);
   }
 }
 

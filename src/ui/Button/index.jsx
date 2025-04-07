@@ -5,7 +5,7 @@ import s from './button.module.scss';
 const Button = (props) => {
   return (
     <>
-      <button className={s.btn}>{props.name}</button>
+      <button className={s.btn} onClick={props.onClick}>{props.name}</button>
     </>
   );
 };
