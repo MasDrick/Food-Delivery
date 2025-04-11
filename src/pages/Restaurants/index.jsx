@@ -52,11 +52,11 @@ const Restaurants = () => {
           </div>
           <div className={s.infoItem}>
             <Clock size={18} />
-            <span>{restaurant.delivery_time} мин</span>
+            <span>{restaurant.delivery_time}</span>
           </div>
           <div className={s.infoItem}>
             <MapPin size={18} />
-            <span>{restaurant.distance} км</span>
+            <span>{restaurant.distance}</span>
           </div>
         </div>
       </div>

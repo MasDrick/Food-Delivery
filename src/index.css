@@ -1,14 +1,47 @@
 :root {
+  /* Light theme (default) */
   --primary-color: #a970e0;
   --secondary-color: #c18ef0;
   --wrapper-color: #fff;
   --text-color-light: #000;
+  --text-color-dark: #333;
   --bg-color: #ede7f6;
+  --secondary-bg-color: #fff;
+  --card-bg: #fff;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --border-color: #ececec;
+  --success-color: #00b574;
+  --success-type: #ffffff;
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32),0px 2px 2px 0px rgba(141, 141, 141, 0.08);
   font-family: 'Nunito Sans', sans-serif;
 }
+
+/* Dark theme */
+[data-theme='dark'] {
+  --primary-color: #c084fc;  /* Vibrant purple that stands out in dark mode */
+  --secondary-color: #a855f7;  /* Slightly darker purple for secondary elements */
+  --wrapper-color: #161A1D;  /* Deep blue-purple background for content areas */
+  --text-color-light: #f8fafc;  /* Very light gray with slight blue tint for main text */
+  --text-color-dark: #bbc2cc;  /* Lighter gray for secondary text */
+  --bg-color: #131516;  /* Deep blue-black for main background */
+  --secondary-bg-color: rgb(29, 27, 31);  /* Slightly lighter than wrapper for secondary elements */
+  --card-bg: #22272B;  /* Slightly lighter than wrapper for cards */
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);  /* Stronger shadow for depth */
+  --border-color: #383854;  /* Subtle border color with purple tint */
+  --success-color: #15392d;
+  --success-type: #10AE79;  /* Bright green that's visible on dark backgrounds */
+  --error-color: #f87171;  /* Soft red that's not too harsh */
+  --warning-color: #fbbf24;  /* Warm amber for warnings */
+  --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32),0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
 body {
   background: var(--bg-color);
   line-height: 1;
+  color: var(--text-color-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 button,
 input,

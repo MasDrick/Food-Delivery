@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate, useLocation } from 'react-router';
 import Header from './components/Header/';
+import ThemeToggle from './components/ThemeToggle';
 import Home from './pages/Home';
 import Restaurants from './pages/Restaurants';
 import Cart from './pages/Cart';
+import Profile from './pages/Profile';
 import Register from './pages/Register/Registration';
 import Login from './pages/Login/LoginForm';
 import { checkAuthStatus } from './store/slices/authSlice';
@@ -54,7 +56,9 @@ function App() {
 
         {/* Защищенные маршруты */}
         <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
+<ThemeToggle />
     </div>
   );
 }

@@ -7,6 +7,11 @@
   border-radius: 10px;
   max-width: 1200px;
 
+  @media (max-width: 768px) {
+    width: calc(100vw - 40px);
+    margin: 20px auto;
+  }
+
   h1 {
     color: var(--primary-color);
   }
