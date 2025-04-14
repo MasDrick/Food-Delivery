@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 
-// Use the same base URL as your other slices
-const API_URL = 'http://localhost:3000/api';
+// Update the API URL to use the constant
+const API_URL = `${API_BASE_URL}/api`;
 
 // Async thunks
 export const fetchCategories = createAsyncThunk(

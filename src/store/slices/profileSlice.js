@@ -1,104 +1,77 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { API_BASE_URL } from '../../config/api';
 
-// Base URL for API requests
-const API_URL = 'http://localhost:3000/api/user';
-
-// Async thunk for fetching user profile
+// Получение профиля пользователя
 export const fetchUserProfile = createAsyncThunk(
   'profile/fetchUserProfile',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        return rejectWithValue('No authentication token found');
-      }
-      
-      const response = await axios.get(`${API_URL}/profile`, {
+      const { auth } = getState();
+      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': `Bearer ${auth.token}`
         }
       });
       
-      return response.data;
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || 'Не удалось загрузить профиль');
+      }
+      
+      return await response.json();
     } catch (error) {
-      // More specific error handling based on your backend responses
-      if (error.response?.status === 401) {
-        return rejectWithValue('Unauthorized: Please log in again');
-      }
-      if (error.response?.status === 404) {
-        return rejectWithValue('Profile not found');
-      }
-      return rejectWithValue(
-        error.response?.data?.message || 'Failed to fetch profile'
-      );
+      return rejectWithValue('Ошибка сети при загрузке профиля');
     }
   }
 );
 
-// Async thunk for updating user profile
+// Обновление профиля пользователя
 export const updateUserProfile = createAsyncThunk(
   'profile/updateUserProfile',
-  async (profileData, { rejectWithValue }) => {
+  async (userData, { rejectWithValue, getState }) => {
     try {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        return rejectWithValue('No authentication token found');
-      }
-      
-      // Only include fields that your backend expects in user_info table
-      const validFields = {};
-      
-      if (profileData.phone !== undefined) validFields.phone = profileData.phone;
-      if (profileData.card_number !== undefined) validFields.card_number = profileData.card_number;
-      
-      const response = await axios.put(`${API_URL}/profile`, validFields, {
+      const { auth } = getState();
+      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
+        method: 'PUT',
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth.token}`
+        },
+        body: JSON.stringify(userData)
       });
       
-      return response.data;
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || 'Не удалось обновить профиль');
+      }
+      
+      return await response.json();
     } catch (error) {
-      if (error.response?.status === 401) {
-        return rejectWithValue('Unauthorized: Please log in again');
-      }
-      if (error.response?.status === 400) {
-        return rejectWithValue(error.response.data.message || 'Invalid data provided');
-      }
-      return rejectWithValue(
-        error.response?.data?.message || 'Failed to update profile'
-      );
+      return rejectWithValue('Ошибка сети при обновлении профиля');
     }
   }
 );
 
-// Add a thunk for fetching order history (for future implementation)
+// Получение истории заказов
 export const fetchOrderHistory = createAsyncThunk(
   'profile/fetchOrderHistory',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        return rejectWithValue('No authentication token found');
-      }
-      
-      // This endpoint would need to be implemented on your backend
-      const response = await axios.get(`${API_URL}/orders`, {
+      const { auth } = getState();
+      const response = await fetch(`${API_BASE_URL}/api/orders/history`, {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': `Bearer ${auth.token}`
         }
       });
       
-      return response.data;
+      if (!response.ok) {
+        const errorData = await response.json();
+        return rejectWithValue(errorData.message || 'Не удалось загрузить историю заказов');
+      }
+      
+      return await response.json();
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || 'Failed to fetch order history'
-      );
+      return rejectWithValue('Ошибка сети при загрузке истории заказов');
     }
   }
 );
