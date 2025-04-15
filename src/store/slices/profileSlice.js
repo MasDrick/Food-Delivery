@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { API_BASE_URL } from '../../config/api';
+
+// Base URL for API requests
+const API_URL = `${API_BASE_URL}/api`;
 
 // Получение профиля пользователя
 export const fetchUserProfile = createAsyncThunk(
@@ -7,20 +11,22 @@ export const fetchUserProfile = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
+      const token = auth.token || localStorage.getItem('token');
+      
+      if (!token) {
+        return rejectWithValue('Не авторизован');
+      }
+      
+      const response = await axios.get(`${API_URL}/users/profile`, {
         headers: {
-          'Authorization': `Bearer ${auth.token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue(errorData.message || 'Не удалось загрузить профиль');
-      }
-      
-      return await response.json();
+      return response.data;
     } catch (error) {
-      return rejectWithValue('Ошибка сети при загрузке профиля');
+      console.error('Profile fetch error:', error);
+      return rejectWithValue(error.response?.data?.message || 'Не удалось загрузить профиль');
     }
   }
 );
@@ -31,23 +37,50 @@ export const updateUserProfile = createAsyncThunk(
   async (userData, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
-        method: 'PUT',
+      const { profile } = getState();
+      
+      // Отправляем полный профиль с обновленными данными
+      const fullUserData = {
+        ...profile.userProfile,  // Все существующие данные профиля
+        ...userData              // Обновляемые поля
+      };
+      
+      const response = await axios.put(`${API_URL}/users/profile`, fullUserData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth.token}`
-        },
-        body: JSON.stringify(userData)
+        }
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue(errorData.message || 'Не удалось обновить профиль');
-      }
-      
-      return await response.json();
+      // Возвращаем обновленный профиль
+      return {
+        ...profile.userProfile,  // Сохраняем существующие данные
+        ...response.data         // Обновляем новыми данными
+      };
     } catch (error) {
-      return rejectWithValue('Ошибка сети при обновлении профиля');
+      return rejectWithValue(error.response?.data?.message || 'Не удалось обновить профиль');
+    }
+  }
+);
+
+
+
+// Добавление адреса
+export const addUserAddress = createAsyncThunk(
+  'profile/addUserAddress',
+  async (addressData, { rejectWithValue, getState }) => {
+    try {
+      const { auth } = getState();
+      const response = await axios.post(`${API_URL}/profile/addresses`, addressData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth.token}`
+        }
+      });
+      
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Не удалось добавить адрес');
     }
   }
 );
@@ -58,20 +91,16 @@ export const fetchOrderHistory = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      const response = await fetch(`${API_BASE_URL}/api/orders/history`, {
+      // Update the endpoint to match your backend route
+      const response = await axios.get(`${API_URL}/orders/history`, {
         headers: {
           'Authorization': `Bearer ${auth.token}`
         }
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue(errorData.message || 'Не удалось загрузить историю заказов');
-      }
-      
-      return await response.json();
+      return response.data;
     } catch (error) {
-      return rejectWithValue('Ошибка сети при загрузке истории заказов');
+      return rejectWithValue(error.response?.data?.message || 'Не удалось загрузить историю заказов');
     }
   }
 );
@@ -129,6 +158,28 @@ const profileSlice = createSlice({
         state.error = action.payload;
         state.updateSuccess = false;
       })
+      // Remove this duplicate case
+      // .addCase(updateUserProfile.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.userProfile = action.payload;
+      //   state.error = null;
+      //   state.updateSuccess = true;
+      // })
+      
+      // Add address cases
+      .addCase(addUserAddress.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addUserAddress.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+        // We'll refresh the profile to get updated addresses
+      })
+      .addCase(addUserAddress.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       
       // Fetch order history cases
       .addCase(fetchOrderHistory.pending, (state) => {
@@ -147,5 +198,6 @@ const profileSlice = createSlice({
   }
 });
 
+// At the end of your file, make sure you have:
 export const { clearProfileError, resetUpdateSuccess } = profileSlice.actions;
-export default profileSlice.reducer;
+export default profileSlice.reducer; // This line is crucial

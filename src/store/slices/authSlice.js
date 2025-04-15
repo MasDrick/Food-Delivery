@@ -115,11 +115,13 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+// Make sure your token is being stored correctly in the auth state
 const initialState = {
+  token: localStorage.getItem('token') || null,
+  isAuthenticated: !!localStorage.getItem('token'),
   user: null,
-  isAuthenticated: false,
-  isLoading: true,
-  error: null,
+  isLoading: false,
+  error: null
 };
 
 const authSlice = createSlice({

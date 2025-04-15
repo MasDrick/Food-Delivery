@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-// Import your existing reducers
 import authReducer from './slices/authSlice';
 import restaurantReducer from './slices/restaurantSlice';
 import categoriesReducer from './slices/categoriesSlice';
-import profileReducer from './slices/profileSlice';
-// Import the new theme reducer
+import profileReducer from './slices/profileslice'; // Changed from profileSlice to profileslice
 import themeReducer from './slices/themeSlice';
 
 export const store = configureStore({
@@ -13,13 +11,12 @@ export const store = configureStore({
     restaurants: restaurantReducer,
     categories: categoriesReducer,
     theme: themeReducer,
-    profile: profileReducer
-    // ... any other reducers you have
+    profile: profileReducer // Make sure this is included
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    })
 });
 
 export default store;

@@ -5,6 +5,7 @@ import { fetchRestaurantsByCategory } from '../../store/slices/categoriesSlice';
 import Categories from '../../components/Categories';
 import RestaurantCard from '../../components/RestaurantCard';
 import SearchBar from '../../components/SearchBar';
+import RestaurantSkeleton from '../../components/SkeletonLoader/RestaurantSkeleton';
 import s from './home.module.scss';
 
 const Home = () => {
@@ -20,7 +21,12 @@ const Home = () => {
 
   // Determine which restaurants to display
   const displayRestaurants = selectedCategory ? filteredRestaurants : restaurants;
-  const isLoading = restaurantsLoading || categoriesLoading;
+  const isLoading = restaurantsLoading || categoriesLoading;// true;
+
+  // Создаем массив скелетонов для отображения во время загрузки
+  const skeletons = Array(6).fill().map((_, index) => (
+    <RestaurantSkeleton key={`skeleton-${index}`} />
+  ));
 
   return (
     <div className={s.container}>
@@ -30,7 +36,9 @@ const Home = () => {
       </div>
 
       {isLoading ? (
-        <div className={s.loading}>Загрузка ресторанов...</div>
+        <div className={s.restaurantsGrid}>
+          {skeletons}
+        </div>
       ) : (
         <div className={s.restaurantsGrid}>
           {displayRestaurants.length > 0 ? (

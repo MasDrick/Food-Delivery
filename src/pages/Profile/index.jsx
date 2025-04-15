@@ -1,86 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { User, Phone, Mail, CreditCard, Percent, Calendar, ShoppingBag, Pencil, X } from 'lucide-react';
-import { fetchUserProfile, updateUserProfile, resetUpdateSuccess, fetchOrderHistory } from '../../store/slices/profileSlice';
-import OrderHistory from '../../components/OrderHistory';
-import s from './profile.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { User, Phone, CreditCard, Edit2, ShoppingBag, Mail, Calendar, Percent } from 'lucide-react';
+import { fetchUserProfile, updateUserProfile, fetchOrderHistory } from '../../store/slices/profileslice';
 import EditProfileModal from '../../components/EditProfileModal';
+import { API_BASE_URL } from '../../config/api';
+import s from './profile.module.scss';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { userProfile, orderHistory, isLoading, error, updateSuccess } = useSelector((state) => state.profile);
-  const { user } = useSelector((state) => state.auth);
-  
-  // Modal state
+  const { userProfile, orderHistory, isLoading, error, updateSuccess } = useSelector((state) => state.profile || {});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editField, setEditField] = useState(null);
   const [fieldValue, setFieldValue] = useState('');
-  const [validationError, setValidationError] = useState('');
+  const [validationError, setValidationError] = useState(null);
 
   useEffect(() => {
-    // Fetch user profile data when component mounts
     dispatch(fetchUserProfile());
-    // Fetch order history when component mounts
     dispatch(fetchOrderHistory());
+
   }, [dispatch]);
 
-  // Reset success message when modal closes
   useEffect(() => {
-    if (!isModalOpen && updateSuccess) {
-      dispatch(resetUpdateSuccess());
+    if (updateSuccess) {
+      setIsModalOpen(false);
     }
-  }, [isModalOpen, updateSuccess, dispatch]);
+  }, [updateSuccess]);
 
-  const handleEditField = (field, currentValue) => {
+  const handleEditClick = (field) => {
     setEditField(field);
-    setFieldValue(currentValue || '');
-    setValidationError('');
+    // Получаем значение напрямую из userProfile
+    setFieldValue(userProfile?.[field] || '');
+    setValidationError(null);
     setIsModalOpen(true);
   };
-  
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setEditField(null);
-    setFieldValue('');
-    setValidationError('');
-  };
-  
-  const validateField = () => {
-    if (editField === 'phone') {
-      // For phone, we'll check if it has the correct format
-      const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
-      if (!phoneRegex.test(fieldValue)) {
-        setValidationError('Введите корректный номер телефона');
-        return false;
-      }
-    }
-    
-    if (editField === 'card_number') {
-      // For card number, we'll check if it has 16 digits
-      if (fieldValue.length !== 16 || !/^\d+$/.test(fieldValue)) {
-        setValidationError('Введите корректный номер карты (16 цифр)');
-        return false;
-      }
-    }
-    
-    // Removed the profile_image validation
-    
-    return true;
-  };
-  
+
   const handleSave = () => {
-    if (!validateField()) return;
+    // Validate field
+    if (editField === 'phone' && !fieldValue.match(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/)) {
+      setValidationError('Введите корректный номер телефона');
+      return;
+    }
     
+    // Создаем объект с полными данными профиля
     const updateData = {
-      [editField]: fieldValue
+      ...userProfile,  // Сохраняем все существующие данные профиля
     };
     
+    // Обрабатываем изображение профиля особым образом
+    if (editField === 'profile_image') {
+      // Если это URL-адрес изображения
+      updateData[editField] = fieldValue;
+    } else {
+      // Для других полей просто обновляем значение
+      updateData[editField] = fieldValue;
+    }
+    
     dispatch(updateUserProfile(updateData));
-    closeModal();
   };
 
   if (isLoading && !userProfile) {
     return <div className={s.loading}>Загрузка профиля...</div>;
+  }
+
+  if (error && !userProfile) {
+    return <div className={s.error}>Ошибка: {error}</div>;
   }
 
   return (
@@ -88,7 +71,7 @@ const Profile = () => {
       <div className={s.profileHeader}>
         <h1>Личный кабинет</h1>
       </div>
-      
+
       <div className={s.profileContent}>
         <div className={s.userInfoSection}>
           <div className={s.avatarContainer}>
@@ -96,85 +79,143 @@ const Profile = () => {
               {userProfile?.profile_image ? (
                 <img 
                   src={userProfile.profile_image} 
-                  alt={userProfile?.username || user?.username} 
+                  alt="Аватар пользователя" 
                   className={s.avatarImage}
                 />
               ) : (
                 <User size={40} />
               )}
               <button 
-                className={s.editAvatarButton} 
-                onClick={() => handleEditField('profile_image', userProfile?.profile_image)}
+                className={s.editAvatarButton}
+                onClick={() => handleEditClick('profile_image')}
+                aria-label="Изменить аватар"
               >
-                <Pencil size={16} />
+                <Edit2 size={20} />
               </button>
             </div>
-            <h2 className={s.userName}>{userProfile?.username || user?.username}</h2>
+            <p className={s.userName}>{userProfile?.username || 'Пользователь'}</p>
           </div>
-          
+
           <div className={s.userDetails}>
             <div className={s.userInfo}>
               <div className={s.infoItem}>
                 <Mail />
-                <span>{userProfile?.email || user?.email}</span>
+                <span>
+                  {userProfile?.email || 'Email не указан'}
+                </span>
               </div>
               
               <div className={s.infoItem}>
                 <Phone />
-                <span>{userProfile?.phone || 'Не указан'}</span>
-                <button className={s.editButton} onClick={() => handleEditField('phone', userProfile?.phone)}>
-                  <Pencil />
+                <span>
+                  {userProfile?.phone || 'Телефон не указан'}
+                </span>
+                <button 
+                  className={s.editButton}
+                  onClick={() => handleEditClick('phone')}
+                  aria-label="Редактировать телефон"
+                >
+                  <Edit2 />
                 </button>
               </div>
               
               <div className={s.infoItem}>
                 <CreditCard />
-                <span>
+                <span className={s.maskedCardNumber}>
                   {userProfile?.card_number 
-                    ? <span className={s.maskedCardNumber}>
-                        {'•••• •••• •••• ' + userProfile.card_number.slice(-4)}
-                      </span> 
-                    : 'Не указана'}
+                    ? `**** **** **** ${userProfile.card_number.slice(-4)}` 
+                    : 'Карта не указана'}
                 </span>
-                <button className={s.editButton} onClick={() => handleEditField('card_number', userProfile?.card_number)}>
-                  <Pencil />
+                <button 
+                  className={s.editButton}
+                  onClick={() => handleEditClick('card_number')}
+                  aria-label="Редактировать карту"
+                >
+                  <Edit2 />
                 </button>
               </div>
               
               <div className={s.infoItem}>
                 <Percent />
-                <span>Персональная скидка: {userProfile?.discount_percent || '0'}%</span>
+                <span>
+                  Скидка: {Math.round(userProfile?.discount_percent || 0)}%
+                </span>
               </div>
               
               <div className={s.infoItem}>
                 <Calendar />
-                <span>Дата регистрации: {new Date(userProfile?.created_at || user?.created_at).toLocaleDateString()}</span>
+                <span>
+                  Дата регистрации: {userProfile?.created_at 
+                    ? new Date(userProfile.created_at).toLocaleDateString('ru-RU', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })
+                    : 'Не указана'}
+                </span>
               </div>
               
               <div className={s.infoItem}>
                 <ShoppingBag />
-                <span>Количество заказов: {userProfile?.orders_count || '0'}</span>
+                <span>
+                  Количество заказов: {userProfile?.orders_count || 0}
+                </span>
               </div>
             </div>
           </div>
         </div>
-        
-        <OrderHistory 
-          isLoading={isLoading} 
-          orders={orderHistory} 
-          ordersCount={userProfile?.orders_count || 0} 
-        />
-      </div>
-      
-      {error && !isLoading && (
-        <div className={s.errorMessage}>
-          Ошибка: {error}
+
+        <div className={s.orderHistorySection}>
+          <h2>История заказов</h2>
+          {orderHistory && orderHistory.length > 0 ? (
+            <div className={s.ordersList}>
+              {orderHistory.map((order) => (
+                <div key={order.id} className={s.orderItem}>
+                  <div className={s.orderHeader}>
+                    <div className={s.orderInfo}>
+                      <ShoppingBag size={20} />
+                      <span className={s.orderNumber}>Заказ #{order.id}</span>
+                      <span className={s.orderDate}>
+                        {new Date(order.created_at).toLocaleDateString('ru-RU')}
+                      </span>
+                    </div>
+                    <div className={s.orderStatus}>
+                      <span className={`${s.statusBadge} ${s[order.status]}`}>
+                        {order.status === 'completed' ? 'Выполнен' : 
+                         order.status === 'processing' ? 'В обработке' : 
+                         order.status === 'delivered' ? 'Доставлен' : 'В пути'}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={s.orderDetails}>
+                    <div className={s.orderItems}>
+                      {order.items && order.items.map((item, index) => (
+                        <div key={index} className={s.orderItemDetails}>
+                          <span className={s.itemName}>{item.name}</span>
+                          <span className={s.itemQuantity}>x{item.quantity}</span>
+                          <span className={s.itemPrice}>{item.price} ₽</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className={s.orderTotal}>
+                      <span>Итого:</span>
+                      <span className={s.totalPrice}>{order.total_price} ₽</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={s.emptyOrders}>
+              <p>У вас пока нет заказов</p>
+            </div>
+          )}
         </div>
-      )}
-      
+      </div>
+
       <EditProfileModal
         isOpen={isModalOpen}
-        onClose={closeModal}
+        onClose={() => setIsModalOpen(false)}
         editField={editField}
         fieldValue={fieldValue}
         setFieldValue={setFieldValue}

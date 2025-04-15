@@ -16,6 +16,10 @@
   --warning-color: #ff9800;
   --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32),0px 2px 2px 0px rgba(141, 141, 141, 0.08);
   font-family: 'Nunito Sans', sans-serif;
+  
+  /* Skeleton colors - light theme */
+  --skeleton-start-color: #f0f0f0;
+  --skeleton-middle-color: #e0e0e0;
 }
 
 /* Dark theme */
@@ -35,6 +39,10 @@
   --error-color: #f87171;  /* Soft red that's not too harsh */
   --warning-color: #fbbf24;  /* Warm amber for warnings */
   --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32),0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+  
+  /* Skeleton colors - dark theme */
+  --skeleton-start-color: #1a1d20;
+  --skeleton-middle-color: #2d2f31;
 }
 
 body {
