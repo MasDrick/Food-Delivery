@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
 import restaurantReducer from './slices/restaurantSlice';
 import categoriesReducer from './slices/categoriesSlice';
-import profileReducer from './slices/profileslice'; // Changed from profileSlice to profileslice
+import profileReducer from './slices/profileSlice'; // Changed from profileSlice to profileslice
 import themeReducer from './slices/themeSlice';
 
 export const store = configureStore({
