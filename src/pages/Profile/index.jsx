@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, Phone, CreditCard, Edit2, ShoppingBag, Mail, Calendar, Percent } from 'lucide-react';
-import { fetchUserProfile, updateUserProfile, fetchOrderHistory } from '../../store/slices/profileslice';
+import { fetchUserProfile, updateUserProfile, fetchOrderHistory } from '../../store/slices/profileSlice';
 import EditProfileModal from '../../components/EditProfileModal';
 import { API_BASE_URL } from '../../config/api';
 import s from './profile.module.scss';
