@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Star, Clock, MapPin } from 'lucide-react';
 import { fetchRestaurantById } from '../../store/slices/restaurantSlice';
+import { addToCart } from '../../store/slices/cartSlice';
+import MenuItemCard from '../../components/MenuItemCard';
 import s from './RestaurantPage.module.scss';
 
 const Restaurants = () => {
@@ -13,6 +15,23 @@ const Restaurants = () => {
   useEffect(() => {
     dispatch(fetchRestaurantById(id));
   }, [dispatch, id]);
+
+  // Handle adding item to cart
+  const handleAddToCart = (item) => {
+    if (currentRestaurant) {
+      dispatch(addToCart({
+        restaurantId: currentRestaurant.id,
+        restaurantName: currentRestaurant.name,
+        item: {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          weight: item.weight,
+          quantity: item.quantity
+        }
+      }));
+    }
+  };
 
   if (isLoading) {
     return <div className={s.container}>Загрузка...</div>;
@@ -63,25 +82,20 @@ const Restaurants = () => {
 
       <div className={s.menuSection}>
         <h2 className={s.menuTitle}>Меню</h2>
+        
         {restaurant.menu && restaurant.menu.length > 0 ? (
-          <table className={s.menuTable}>
-            <thead>
-              <tr>
-                <th>Блюдо</th>
-                <th>Вес</th>
-                <th>Цена</th>
-              </tr>
-            </thead>
-            <tbody>
-              {restaurant.menu.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>{item.weight}</td>
-                  <td>{item.price} ₽</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className={s.menuGrid}>
+            {restaurant.menu.map((item) => (
+              <MenuItemCard
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                price={item.price}
+                weight={item.weight}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </div>
         ) : (
           <p>Меню временно недоступно.</p>
         )}

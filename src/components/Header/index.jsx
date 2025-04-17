@@ -7,7 +7,7 @@ import { logoutUser } from '../../store/slices/authSlice';
 import s from './header.module.scss'; 
 
 const Header = () => {
-  const [activeLink, setActiveLink] = useState(0);
+  const [activeLink, setActiveLink] = useState(0); 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const Header = () => {
       <Link to="/">
         <div className={s.logo}>
           <img src="./logo.svg" alt="logoimg" />
-          <div>
+          <div className={s.logoInfo}>
             <h1>Порция Счастья</h1>
             <p>С любовью к вашему столу!</p>
           </div>

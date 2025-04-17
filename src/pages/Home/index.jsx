@@ -24,7 +24,8 @@ const Home = () => {
   const isLoading = restaurantsLoading || categoriesLoading;// true;
 
   // Создаем массив скелетонов для отображения во время загрузки
-  const skeletons = Array(6).fill().map((_, index) => (
+  const skeletonCount = categoriesLoading && !restaurantsLoading ? 3 : 6;
+  const skeletons = Array(skeletonCount).fill().map((_, index) => (
     <RestaurantSkeleton key={`skeleton-${index}`} />
   ));
 

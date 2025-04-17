@@ -82,7 +82,7 @@ const EditProfileModal = ({
   };
 
   return (
-    <div className={s.modalOverlay}>
+    <div className={s.modalOverlay}> 
       <div className={s.modal}>
         <div className={s.modalHeader}>
           <h3>{getModalTitle()}</h3>

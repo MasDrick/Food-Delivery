@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Register from './pages/Register/Registration';
 import Login from './pages/Login/LoginForm';
+import NotFound from './pages/NotFound';
 import { checkAuthStatus } from './store/slices/authSlice';
 import s from './app.module.scss';
 
@@ -41,6 +42,7 @@ function App() {
           path="/register"
           element={!isAuthenticated ? <Register /> : <Navigate to="/" />}
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     );
   }
@@ -57,8 +59,11 @@ function App() {
         {/* Защищенные маршруты */}
         <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
+        
+        {/* 404 страница */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
-<ThemeToggle />
+      <ThemeToggle />
     </div>
   );
 }
