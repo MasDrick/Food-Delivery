@@ -11,6 +11,7 @@
   margin-bottom: 30px;
 
   h1 {
+    margin: 0;
     font-size: 28px;
     font-weight: 700;
     color: var(--text-primary);
@@ -27,10 +28,11 @@
   cursor: pointer;
   padding: 8px 12px;
   border-radius: 8px;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
+    color: var(--danger-color, #ef4444);
   }
 }
 
@@ -96,7 +98,7 @@
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 14px;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -106,6 +108,7 @@
 
 .itemsList {
   padding: 0 20px;
+  color: var(--text-color-dark);
 }
 
 // Responsive styles
@@ -192,6 +195,7 @@
 }
 
 .itemPrice {
+  color: var(--text-color-light);
   font-weight: 600;
   font-size: 16px;
   min-width: 80px;
@@ -247,7 +251,7 @@
     transition: background-color 0.2s;
   
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: rgba(255, 255, 255, 0.425);
       color: var(--danger-color, #ef4444);
     }
   }
@@ -263,6 +267,10 @@
   margin-top: 16px;
   font-size: 14px;
   color: var(--text-secondary);
+
+  span:first-child {
+    color: var(--text-color-dark);
+  }
 
   &:last-child {
     margin-bottom: 0;

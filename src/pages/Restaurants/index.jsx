@@ -5,6 +5,7 @@ import { Star, Clock, MapPin } from 'lucide-react';
 import { fetchRestaurantById } from '../../store/slices/restaurantSlice';
 import { addToCart } from '../../store/slices/cartSlice';
 import MenuItemCard from '../../components/MenuItemCard';
+import RestaurantPageSkeleton from '../../components/SkeletonLoader/RestaurantPageSkeleton';
 import s from './RestaurantPage.module.scss';
 
 const Restaurants = () => {
@@ -34,7 +35,7 @@ const Restaurants = () => {
   };
 
   if (isLoading) {
-    return <div className={s.container}>Загрузка...</div>;
+    return <RestaurantPageSkeleton />;
   }
 
   if (error) {

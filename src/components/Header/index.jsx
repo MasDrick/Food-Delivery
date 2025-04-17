@@ -59,7 +59,7 @@ const Header = () => {
     <div className={s.header}>
       <Link to="/">
         <div className={s.logo}>
-          <img src="./logo.svg" alt="logoimg" />
+          <img src="/logo.svg" alt="logoimg" />
           <div className={s.logoInfo}>
             <h1>Порция Счастья</h1>
             <p>С любовью к вашему столу!</p>
