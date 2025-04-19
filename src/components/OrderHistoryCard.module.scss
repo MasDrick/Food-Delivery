@@ -1,0 +1,340 @@
+.card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  color: var(--text-color-light);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  
+  &:hover {
+    box-shadow: 0 8px 30px rgba(169, 112, 224, 0.15);
+  }
+  
+  &.expanded {
+    box-shadow: 0 12px 40px rgba(169, 112, 224, 0.2);
+  }
+}
+
+.cardTop {
+  padding: 20px 24px;
+  position: relative;
+}
+
+.orderMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.orderNumberWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-color);
+  cursor: pointer;
+  
+  svg {
+    stroke-width: 2px;
+  }
+}
+
+.orderNumber {
+  font-weight: 700;
+  font-size: 18px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+  }
+  
+  .orderNumberWrapper:hover & {
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+.orderDateWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-color-dark);
+  margin-bottom: 16px;
+  
+  svg {
+    opacity: 0.7;
+  }
+}
+
+.orderDate {
+  font-size: 14px;
+}
+
+.statusBadge {
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 120px;
+}
+
+.statusPending {
+  background: var(--warning-color);
+  color: var(--warning-type);
+}
+
+.statusProcessing {
+  background: var(--pending-color);
+  color: var(--pending-type);
+}
+
+.statusDelivering {
+  background: var(--info-color);
+  color: var(--info-type);
+}
+
+.statusCompleted {
+  background: var(--success-color);
+  color: var(--success-type);
+}
+
+.statusCancelled {
+  background: var(--error-color);
+  color: var(--error-type);
+}
+
+.summaryInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.addressInfo, .phoneInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--text-color-dark);
+  
+  svg {
+    color: var(--primary-color);
+  }
+}
+
+.summaryAmount {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.totalLabel {
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.totalValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.expandButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px;
+  
+  background: rgba(169, 112, 224, 0.05);
+  border: none;
+  border-top: 1px solid var(--border-color);
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  
+  &:hover {
+    background: var(--border-color);
+  }
+  
+  span {
+    font-size: 14px;
+  }
+}
+
+.expandedContent {
+  padding: 0 24px 24px;
+  border-top: 1px dashed var(--border-color);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.commentSection {
+  background: rgba(169, 112, 224, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+  
+  h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+  }
+  
+  p {
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--text-color-dark);
+  }
+}
+
+.itemsBlock {
+  margin: 20px 0;
+}
+
+.itemsTitle {
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-size: 18px;
+  color: var(--text-color-light);
+  position: relative;
+  display: inline-block;
+}
+
+.itemsList {
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemName {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-color-light);
+}
+
+.restaurantName {
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.itemPricing {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.itemQuantity {
+  background: var(--primary-color);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.itemPrice {
+  color: var(--text-color-dark);
+  font-size: 14px;
+}
+
+.itemTotal {
+  font-weight: 700;
+  color: var(--text-color-light);
+  font-size: 16px;
+}
+
+.totals {
+  margin-top: 24px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: var(--card-shadow);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 15px;
+  
+  &:not(:last-child) {
+    border-bottom: 1px dashed var(--border-color);
+  }
+}
+
+.finalTotal {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--primary-color);
+  padding-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .orderMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .statusBadge {
+    align-self: flex-start;
+  }
+  
+  .summaryInfo {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .itemPricing {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  
+  .expandedContent {
+    padding: 0 16px 16px;
+  }
+}

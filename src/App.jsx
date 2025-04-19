@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import Register from './pages/Register/Registration';
 import Login from './pages/Login/LoginForm';
 import NotFound from './pages/NotFound';
+import OrderConfirmation from './pages/OrderConfirmation';
 import { checkAuthStatus } from './store/slices/authSlice';
 import s from './app.module.scss';
 
@@ -59,6 +60,7 @@ function App() {
         {/* Защищенные маршруты */}
         <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/orders/:orderId" element={isAuthenticated ? <OrderConfirmation /> : <Navigate to="/login" />} />
         
         {/* 404 страница */}
         <Route path="*" element={<NotFound />} />

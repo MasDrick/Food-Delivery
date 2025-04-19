@@ -13,7 +13,13 @@
   --success-color: #00b574;
   --success-type: #ffffff;
   --error-color: #f44336;
+  --error-type: #ffffff; 
+  --info-color: #4c88db;  /* Slightly muted blue for info */
+  --info-type: #ffffff;
   --warning-color: #ff9800;
+  --warning-type: #fff;
+  --pending-color: #a970e0;
+  --pending-type: #ffffff;
   --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32),0px 2px 2px 0px rgba(141, 141, 141, 0.08);
   font-family: 'Nunito Sans', sans-serif;
   
@@ -36,8 +42,14 @@
   --border-color: #383854;  /* Subtle border color with purple tint */
   --success-color: #15392d;
   --success-type: #10AE79;  /* Bright green that's visible on dark backgrounds */
-  --error-color: #f87171;  /* Soft red that's not too harsh */
-  --warning-color: #fbbf24;  /* Warm amber for warnings */
+  --error-color: #d43e3e;  /* Soft red that's not too harsh */
+  --error-type: #ffc8c8; 
+  --info-color: #1853a5;  /* Slightly muted blue for info */
+  --info-type: #8dbcff;
+  --warning-color: #a77d12;  /* Warm amber for warnings */
+  --warning-type: #ffe9b2;
+  --pending-color: #8739cf;
+  --pending-type: #d5bbee;
   --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32),0px 2px 2px 0px rgba(0, 0, 0, 0.08);
   
   /* Skeleton colors - dark theme */

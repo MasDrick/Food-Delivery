@@ -143,6 +143,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
+        state.token = action.payload.token; // 👈 добавь эту строку
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -159,6 +160,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = true;
         state.user = action.payload.user;
+        state.token = action.payload.token; // 👈 и здесь
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {

@@ -1,0 +1,204 @@
+.confirmationPage {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px 40px;
+}
+
+.confirmationCard {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  text-align: center;
+}
+
+.successIcon {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: var(--text-primary);
+}
+
+.orderNumber {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 30px;
+}
+
+.orderDetails {
+  text-align: left;
+  margin-top: 30px;
+  
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: var(--text-primary);
+  }
+  
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 30px 0 15px 0;
+    color: var(--text-primary);
+  }
+}
+
+.orderInfo {
+  background-color: var(--bg-light);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  
+  &:last-child {
+    margin-bottom: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+  }
+  
+  span:first-child {
+    color: var(--text-secondary);
+  }
+  
+  span:last-child {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: inline-block;
+  font-size: 15px;
+}
+
+.status-pending {
+  background: var(--warning-color);
+  color: #fff;
+}
+.status-processing {
+  background: var(--primary-color);
+  color: #fff;
+}
+.status-delivering {
+  background: var(--secondary-color);
+  color: #fff;
+}
+.status-completed {
+  background: var(--success-type);
+  color: var(--success-color);
+}
+.status-cancelled {
+  background: var(--error-color);
+  color: #fff;
+}
+
+.totalAmount {
+  font-weight: 700 !important;
+  font-size: 18px;
+  color: var(--primary-color) !important;
+}
+
+.orderItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border-color);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.itemName {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.restaurantName {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-end;
+  
+  span:first-child {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+}
+
+.itemTotal {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.actions {
+  margin-top: 30px;
+}
+
+.homeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: var(--secondary-color);
+  }
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: var(--text-secondary);
+}
+
+.error {
+  color: var(--danger-color, #ef4444);
+}
+
+@media (max-width: 768px) {
+  .confirmationCard {
+    padding: 20px;
+  }
+  
+  .orderItem {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .itemDetails {
+    align-items: flex-start;
+  }
+}

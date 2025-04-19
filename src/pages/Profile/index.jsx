@@ -5,6 +5,8 @@ import { fetchUserProfile, updateUserProfile, fetchOrderHistory } from '../../st
 import EditProfileModal from '../../components/EditProfileModal';
 import { API_BASE_URL } from '../../config/api';
 import s from './profile.module.scss';
+import { fetchUserOrders } from '../../store/slices/orderSlice';
+import OrderHistoryCard from '../../components/OrderHistoryCard';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -166,43 +168,13 @@ const Profile = () => {
         </div>
 
         <div className={s.orderHistorySection}>
-          <h2>История заказов</h2>
+          <div className={s.historyTitle}>
+            <h2>История заказов</h2>
+          </div>
           {orderHistory && orderHistory.length > 0 ? (
             <div className={s.ordersList}>
               {orderHistory.map((order) => (
-                <div key={order.id} className={s.orderItem}>
-                  <div className={s.orderHeader}>
-                    <div className={s.orderInfo}>
-                      <ShoppingBag size={20} />
-                      <span className={s.orderNumber}>Заказ #{order.id}</span>
-                      <span className={s.orderDate}>
-                        {new Date(order.created_at).toLocaleDateString('ru-RU')}
-                      </span>
-                    </div>
-                    <div className={s.orderStatus}>
-                      <span className={`${s.statusBadge} ${s[order.status]}`}>
-                        {order.status === 'completed' ? 'Выполнен' : 
-                         order.status === 'processing' ? 'В обработке' : 
-                         order.status === 'delivered' ? 'Доставлен' : 'В пути'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className={s.orderDetails}>
-                    <div className={s.orderItems}>
-                      {order.items && order.items.map((item, index) => (
-                        <div key={index} className={s.orderItemDetails}>
-                          <span className={s.itemName}>{item.name}</span>
-                          <span className={s.itemQuantity}>x{item.quantity}</span>
-                          <span className={s.itemPrice}>{item.price} ₽</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className={s.orderTotal}>
-                      <span>Итого:</span>
-                      <span className={s.totalPrice}>{order.total_price} ₽</span>
-                    </div>
-                  </div>
-                </div>
+                <OrderHistoryCard key={order.id} order={order} />
               ))}
             </div>
           ) : (

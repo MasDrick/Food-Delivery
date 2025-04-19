@@ -91,8 +91,8 @@ export const fetchOrderHistory = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      // Update the endpoint to match your backend route
-      const response = await axios.get(`${API_URL}/orders/history`, {
+      // Исправляем endpoint на /users/profile/orders
+      const response = await axios.get(`${API_URL}/users/profile/orders`, {
         headers: {
           'Authorization': `Bearer ${auth.token}`
         }

@@ -5,6 +5,7 @@ import categoriesReducer from './slices/categoriesSlice';
 import profileReducer from './slices/profileSlice'; // Changed from profileSlice to profileslice
 import themeReducer from './slices/themeSlice';
 import cartReducer from './slices/cartSlice';
+import orderReducer from './slices/orderSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     categories: categoriesReducer,
     theme: themeReducer,
     profile: profileReducer, // Make sure this is included
-    cart: cartReducer
+    cart: cartReducer,
+    orders: orderReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
