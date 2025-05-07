@@ -1,25 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { User, Phone, CreditCard, Edit2, ShoppingBag, Mail, Calendar, Percent } from 'lucide-react';
-import { fetchUserProfile, updateUserProfile, fetchOrderHistory } from '../../store/slices/profileSlice';
-import EditProfileModal from '../../components/EditProfileModal';
-import { API_BASE_URL } from '../../config/api';
-import s from './profile.module.scss';
-import { fetchUserOrders } from '../../store/slices/orderSlice';
-import OrderHistoryCard from '../../components/OrderHistoryCard';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  User,
+  Phone,
+  CreditCard,
+  Edit2,
+  ShoppingBag,
+  Mail,
+  Calendar,
+  Percent,
+} from "lucide-react";
+import {
+  fetchUserProfile,
+  updateUserProfile,
+  fetchOrderHistory,
+} from "../../store/slices/profileSlice";
+import EditProfileModal from "../../components/EditProfileModal";
+import { API_BASE_URL } from "../../config/api";
+import s from "./profile.module.scss";
+import { fetchUserOrders } from "../../store/slices/orderSlice";
+import OrderHistoryCard from "../../components/OrderHistoryCard";
+import { Link } from "react-router";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { userProfile, orderHistory, isLoading, error, updateSuccess } = useSelector((state) => state.profile || {});
+  const { userProfile, orderHistory, isLoading, error, updateSuccess } =
+    useSelector((state) => state.profile || {});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editField, setEditField] = useState(null);
-  const [fieldValue, setFieldValue] = useState('');
+  const [fieldValue, setFieldValue] = useState("");
   const [validationError, setValidationError] = useState(null);
 
   useEffect(() => {
     dispatch(fetchUserProfile());
     dispatch(fetchOrderHistory());
-
   }, [dispatch]);
 
   useEffect(() => {
@@ -31,32 +45,35 @@ const Profile = () => {
   const handleEditClick = (field) => {
     setEditField(field);
     // Получаем значение напрямую из userProfile
-    setFieldValue(userProfile?.[field] || '');
+    setFieldValue(userProfile?.[field] || "");
     setValidationError(null);
     setIsModalOpen(true);
   };
 
   const handleSave = () => {
     // Validate field
-    if (editField === 'phone' && !fieldValue.match(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/)) {
-      setValidationError('Введите корректный номер телефона');
+    if (
+      editField === "phone" &&
+      !fieldValue.match(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/)
+    ) {
+      setValidationError("Введите корректный номер телефона");
       return;
     }
-    
+
     // Создаем объект с полными данными профиля
     const updateData = {
-      ...userProfile,  // Сохраняем все существующие данные профиля
+      ...userProfile, // Сохраняем все существующие данные профиля
     };
-    
+
     // Обрабатываем изображение профиля особым образом
-    if (editField === 'profile_image') {
+    if (editField === "profile_image") {
       // Если это URL-адрес изображения
       updateData[editField] = fieldValue;
     } else {
       // Для других полей просто обновляем значение
       updateData[editField] = fieldValue;
     }
-    
+
     dispatch(updateUserProfile(updateData));
   };
 
@@ -79,84 +96,86 @@ const Profile = () => {
           <div className={s.avatarContainer}>
             <div className={s.userAvatar}>
               {userProfile?.profile_image ? (
-                <img 
-                  src={userProfile.profile_image} 
-                  alt="Аватар пользователя" 
+                <img
+                  src={userProfile.profile_image}
+                  alt="Аватар пользователя"
                   className={s.avatarImage}
                 />
               ) : (
                 <User size={40} />
               )}
-              <button 
+              <button
                 className={s.editAvatarButton}
-                onClick={() => handleEditClick('profile_image')}
+                onClick={() => handleEditClick("profile_image")}
                 aria-label="Изменить аватар"
               >
                 <Edit2 size={20} />
               </button>
             </div>
-            <p className={s.userName}>{userProfile?.username || 'Пользователь'}</p>
+            <p className={s.userName}>
+              {userProfile?.username || "Пользователь"}
+            </p>
           </div>
 
           <div className={s.userDetails}>
             <div className={s.userInfo}>
               <div className={s.infoItem}>
                 <Mail />
-                <span>
-                  {userProfile?.email || 'Email не указан'}
-                </span>
+                <span>{userProfile?.email || "Email не указан"}</span>
               </div>
-              
+
               <div className={s.infoItem}>
                 <Phone />
-                <span>
-                  {userProfile?.phone || 'Телефон не указан'}
-                </span>
-                <button 
+                <span>{userProfile?.phone || "Телефон не указан"}</span>
+                <button
                   className={s.editButton}
-                  onClick={() => handleEditClick('phone')}
+                  onClick={() => handleEditClick("phone")}
                   aria-label="Редактировать телефон"
                 >
                   <Edit2 />
                 </button>
               </div>
-              
+
               <div className={s.infoItem}>
                 <CreditCard />
                 <span className={s.maskedCardNumber}>
-                  {userProfile?.card_number 
-                    ? `**** **** **** ${userProfile.card_number.slice(-4)}` 
-                    : 'Карта не указана'}
+                  {userProfile?.card_number
+                    ? `**** **** **** ${userProfile.card_number.slice(-4)}`
+                    : "Карта не указана"}
                 </span>
-                <button 
+                <button
                   className={s.editButton}
-                  onClick={() => handleEditClick('card_number')}
+                  onClick={() => handleEditClick("card_number")}
                   aria-label="Редактировать карту"
                 >
                   <Edit2 />
                 </button>
               </div>
-              
+
               <div className={s.infoItem}>
                 <Percent />
                 <span>
                   Скидка: {Math.round(userProfile?.discount_percent || 0)}%
                 </span>
               </div>
-              
+
               <div className={s.infoItem}>
                 <Calendar />
                 <span>
-                  Дата регистрации: {userProfile?.created_at 
-                    ? new Date(userProfile.created_at).toLocaleDateString('ru-RU', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })
-                    : 'Не указана'}
+                  Дата регистрации:{" "}
+                  {userProfile?.created_at
+                    ? new Date(userProfile.created_at).toLocaleDateString(
+                        "ru-RU",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )
+                    : "Не указана"}
                 </span>
               </div>
-              
+
               <div className={s.infoItem}>
                 <ShoppingBag />
                 <span>
@@ -168,18 +187,37 @@ const Profile = () => {
         </div>
 
         <div className={s.orderHistorySection}>
-          <div className={s.historyTitle}>
-            <h2>История заказов</h2>
-          </div>
           {orderHistory && orderHistory.length > 0 ? (
-            <div className={s.ordersList}>
-              {orderHistory.map((order) => (
-                <OrderHistoryCard key={order.id} order={order} />
-              ))}
-            </div>
+            <>
+              <div className={s.historyTitle}>
+                <h2>История заказов</h2>
+              </div>
+              <div className={s.ordersList}>
+                {orderHistory.map((order) => (
+                  <OrderHistoryCard
+                    key={order.id}
+                    order={order}
+                    discountPercent={userProfile?.discount_percent}
+                  />
+                ))}
+              </div>
+            </>
           ) : (
             <div className={s.emptyOrders}>
-              <p>У вас пока нет заказов</p>
+              <h2>У вас пока нет заказов 😔</h2>
+              <img
+                src="/shopping-cart.png"
+                alt="shopping-cart"
+                className={s.emptyCartImage}
+              />
+              <p>Вы еще не сделали ни одного заказа в нашем сервисе</p>
+              <p className={s.emptyOrdersSubtext}>
+                Самое время исправить это и попробовать наши блюда!
+              </p>
+              <Link to="/" className={s.goToMainButton}>
+                <ShoppingBag size={18} />
+                Перейти к ресторанам
+              </Link>
             </div>
           )}
         </div>

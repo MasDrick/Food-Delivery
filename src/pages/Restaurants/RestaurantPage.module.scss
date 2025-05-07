@@ -23,6 +23,30 @@
   filter: brightness(0.5);
 }
 
+.backToHomeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--text-color);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: white;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
 .heroContent {
   position: absolute;
   top: 0;
@@ -186,7 +210,57 @@
   }
 }
 
-// Add these styles to your existing RestaurantPage.module.scss
+// Add these styles to your existing RestaurantPage.module.scss file
+
+.emptyMenuContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  background-color: var(--wrapper-color);
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.emptyMenuImage {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 24px;
+  opacity: 0.9;
+}
+
+.emptyMenuTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+.emptyMenuText {
+  font-size: 16px;
+  color: var(--text-color-light);
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .emptyMenuImage {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 16px;
+  }
+
+  .emptyMenuTitle {
+    font-size: 18px;
+  }
+
+  .emptyMenuText {
+    font-size: 14px;
+  }
+}
 
 .menuHeader {
   display: flex;
@@ -219,6 +293,31 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
   margin-top: 20px;
+}
+
+.backToHomeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--wrapper-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background-color: var(--bg-color);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 // You may need to adjust other styles as needed

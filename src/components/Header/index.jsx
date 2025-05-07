@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router';
-import { UserRound, ShoppingCart, ChefHat, Menu, X } from 'lucide-react';
+import { UserRound, ShoppingCart, ChefHat, Menu, X, Settings, ChevronDown, LogOut } from 'lucide-react';
 import Button from '../../ui/Button';
 import { logoutUser } from '../../store/slices/authSlice';
 import s from './header.module.scss'; 
@@ -13,11 +13,24 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Get current location
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const isAdmin = user?.role === 'admin'; 
-
+  const { userProfile, isLoading: profileLoading } = useSelector((state) => state.profile || {});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  const isAdmin = userProfile?.role === 'admin';
+  
   // Get the username to display in the header
   const displayName = user?.username || 'Пользователь';
 
+  // Add a useEffect to fetch the user profile if needed
+  useEffect(() => {
+    // If authenticated but no profile data yet, fetch it
+    if (isAuthenticated && !userProfile && !profileLoading) {
+      // Assuming you have an action to fetch the profile
+      // dispatch(fetchUserProfile());
+    }
+  }, [isAuthenticated, userProfile, profileLoading, dispatch]);
+  
   // Update active link based on current path when component mounts or path changes
   useEffect(() => {
     const path = location.pathname;
@@ -25,7 +38,7 @@ const Header = () => {
       setActiveLink(0);
     } else if (path === '/cart') {
       setActiveLink(1);
-    } else if (path === '/profile') {
+    } else if (path === '/profile' || path === '/admin') {
       setActiveLink(2);
     }
   }, [location.pathname]);
@@ -54,6 +67,24 @@ const Header = () => {
   const handleLogin = () => {
     navigate('/login');
   };
+
+  // Toggle dropdown
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setIsDropdownOpen(false);
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className={s.header}>
@@ -93,15 +124,57 @@ const Header = () => {
                   <span>Корзина</span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/profile"
-                  className={`${activeLink === 2 ? s.active : ''} ${isAdmin ? s.admin : ''}`}
-                  onClick={() => handleLinkClick(2)}>
-                  <UserRound size={18} />
-                  <span>{isAdmin ? 'Админка' : displayName}</span>
-                </Link>
-              </li>
+              {isAdmin ? (
+                <li className={s.adminDropdown} onClick={(e) => e.stopPropagation()}>
+                  <div 
+                    className={`${s.dropdownToggle} ${s.admin} ${
+                      activeLink === 2 || location.pathname === '/admin' ? s.active : ''
+                    }`} 
+                    onClick={toggleDropdown}
+                  >
+                    <UserRound size={18} />
+                    <span>{displayName}</span>
+                    <ChevronDown size={16} />
+                  </div>
+                  
+                  {isDropdownOpen && (
+                    <div className={s.dropdownMenu}>
+                      <Link 
+                        to="/profile" 
+                        className={s.dropdownItem} 
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          handleLinkClick(2);
+                        }}
+                      >
+                        <UserRound size={16} />
+                        <span>Профиль</span>
+                      </Link>
+                      <Link 
+                        to="/admin" 
+                        className={`${s.dropdownItem} ${s.adminItem}`} 
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          // Don't set activeLink here to keep the dropdown highlighted
+                        }}
+                      >
+                        <Settings size={16} />
+                        <span>Админ панель</span>
+                      </Link>
+                    </div>
+                  )}
+                </li>
+              ) : (
+                <li>
+                  <Link
+                    to="/profile"
+                    className={activeLink === 2 ? s.active : ''}
+                    onClick={() => handleLinkClick(2)}>
+                    <UserRound size={18} />
+                    <span>{displayName}</span>
+                  </Link>
+                </li>
+              )}
             </ul>
             <Button name={'Выйти'} onClick={handleLogout} />
             

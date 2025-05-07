@@ -85,23 +85,23 @@ h1 {
 
 .status-pending {
   background: var(--warning-color);
-  color: #fff;
+  color: var(--warning-type) !important;
 }
 .status-processing {
-  background: var(--primary-color);
-  color: #fff;
+  background: var(--pending-color);
+  color: var(--pending-type) !important;
 }
 .status-delivering {
-  background: var(--secondary-color);
-  color: #fff;
+  background: var(--info-color);
+  color: var(--info-type) !important;
 }
 .status-completed {
-  background: var(--success-type);
-  color: var(--success-color);
+  background: var(--success-color);
+  color: var(--success-type) !important;
 }
 .status-cancelled {
   background: var(--error-color);
-  color: #fff;
+  color: var(--error-type) !important;
 }
 
 .totalAmount {
@@ -201,4 +201,49 @@ h1 {
   .itemDetails {
     align-items: flex-start;
   }
+}
+
+.commentRow {
+  margin: 16px 0;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.commentText {
+  font-style: italic;
+  color: var(--text-color-dark);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.discountRow {
+  background-color: var(--success-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 12px 0;
+  transition: background-color 0.2s ease;
+  
+  span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--success-type);
+    font-weight: 500;
+  }
+}
+
+.discountAmount {
+  color: var(--success-type) !important;
+  font-weight: 600 !important;
 }

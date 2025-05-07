@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  
+
   // img {
   //   width: 50px;
   //   height: 50px;
@@ -21,15 +21,14 @@
       letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
-margin: 0;
+      margin: 0;
     }
     p {
       margin-top: 5px;
       margin-bottom: 0;
       color: var(--text-color-dark);
     }
-}
-  
+  }
 }
 
 .menu {
@@ -37,24 +36,11 @@ margin: 0;
   align-items: center;
   gap: 30px;
 }
-.admin {
-  &:hover {
-    color: #ff4a4a !important;
-    background-color: rgba(189, 145, 196, 0.1);
-  }
-  &.active {
-    color: #ff4a4a !important;
-    background-color: rgba(212, 106, 106, 0.123) !important;
 
-    svg {
-      color: #ff4a4a !important;
-    }
-  }
-}
 .nav {
   display: flex;
   gap: 20px;
-  
+
   li {
     a {
       display: flex;
@@ -66,7 +52,7 @@ margin: 0;
       padding: 8px 12px;
       border-radius: 8px;
       transition: all 0.2s ease;
-      
+
       &:hover {
         color: var(--primary-color);
         background-color: rgba(189, 145, 196, 0.1);
@@ -109,28 +95,28 @@ margin: 0;
     h1 {
       font-size: 20px;
     }
-    
+
     p {
       font-size: 12px;
     }
-    
+
     img {
       width: 40px;
       height: 40px;
     }
   }
-  
+
   .nav {
     gap: 10px;
-    
+
     li {
       a {
         padding: 6px 10px;
-        
+
         span {
           font-size: 14px;
         }
-        
+
         svg {
           width: 16px;
           height: 16px;
@@ -138,22 +124,18 @@ margin: 0;
       }
     }
   }
-  
+
   .menu {
     gap: 20px;
-    
   }
-  
-  
 }
 /* Media queries for responsive design */
 @media (max-width: 820px) {
-  
   .mobileMenuToggle {
     display: block;
     z-index: 1001;
   }
-  
+
   .menuContainer {
     position: fixed;
     top: 0;
@@ -167,35 +149,35 @@ margin: 0;
     transition: right 0.3s ease;
     z-index: 1000;
     flex-direction: column;
-    
+
     &.open {
       right: 0;
     }
   }
-  
+
   .menu {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .nav {
     flex-direction: column;
     width: 100%;
-    
+
     li {
       width: 100%;
-      
+
       a {
         padding: 12px;
         width: 100%;
       }
     }
   }
-  
+
   .authButtons {
     flex-direction: column;
     width: 100%;
-    
+
     button {
       width: 100%;
       margin-bottom: 10px;
@@ -208,11 +190,11 @@ margin: 0;
     h1 {
       font-size: 18px;
     }
-    
+
     p {
       font-size: 12px;
     }
-    
+
     img {
       width: 40px;
       height: 40px;
@@ -228,27 +210,141 @@ margin: 0;
   }
 }
 
-/* Add this to your existing header.module.scss */
+// Add these styles to your existing header.module.scss file
 
-.themeToggle {
-  button {
+// Update the adminDropdown styles to match the nav item styles
+.adminDropdown {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+
+  .dropdownToggle {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: none;
-    border: none;
     color: var(--text-color-light);
-    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
     padding: 8px 12px;
     border-radius: 8px;
-    transition: background-color 0.2s ease;
-    
+    transition: all 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+
     &:hover {
-      background-color: rgba(169, 112, 224, 0.1);
-    }
-    
-    svg {
       color: var(--primary-color);
+      background-color: rgba(189, 145, 196, 0.1);
+    }
+
+    &.active {
+      color: var(--primary-color);
+      background-color: rgba(198, 106, 212, 0.123);
+
+      svg {
+        color: var(--primary-color);
+      }
+    }
+
+    // Remove the admin styles from the dropdown toggle
+    // &.admin {
+    //   &:hover {
+    //     color: #ff4a4a !important;
+    //     background-color: rgba(189, 145, 196, 0.1);
+    //     svg {
+    //       color: #ff4a4a !important;
+    //     }
+    //   }
+    //   &.active {
+    //     color: #ff4a4a !important;
+    //     background-color: rgba(212, 106, 106, 0.123) !important;
+    //     svg {
+    //       color: #ff4a4a !important;
+    //     }
+    //   }
+    // }
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    width: 200px;
+    background-color: var(--wrapper-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 1000;
+    border: 1px solid var(--border-color, #eee);
+  }
+
+  .dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(198, 106, 212, 0.123);
+      color: var(--primary-color);
+
+      svg {
+        color: var(--primary-color);
+      }
+    }
+
+    &.adminItem {
+      color: #ff4a4a;
+
+      svg {
+        color: #ff4a4a;
+      }
+
+      &:hover {
+        background-color: rgba(212, 106, 106, 0.123);
+      }
+    }
+  }
+}
+
+// Make sure the dropdown toggle matches the other nav items
+.nav {
+  li {
+    &.adminDropdown {
+      .dropdownToggle {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        font-weight: 500;
+
+        &.active {
+          color: var(--primary-color);
+        }
+      }
+    }
+  }
+}
+
+// Add responsive styles for mobile
+@media (max-width: 768px) {
+  .adminDropdown {
+    .dropdownMenu {
+      position: static;
+      width: 100%;
+      margin-top: 5px;
+      box-shadow: none;
+      border: none;
+      background-color: transparent;
+      padding: 0 0 0 15px;
+    }
+
+    .dropdownItem {
+      padding: 8px 10px;
     }
   }
 }

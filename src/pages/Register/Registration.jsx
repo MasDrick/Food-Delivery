@@ -23,6 +23,13 @@ const RegisterForm = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  // Show error alert when error state changes
+  useEffect(() => {
+    if (error) {
+      alert(error.message || 'Ошибка регистрации');
+    }
+  }, [error]);
+
   const initialValues = {
     username: '',
     email: '',
@@ -49,16 +56,34 @@ const RegisterForm = () => {
       const resultAction = await dispatch(registerUser(values));
       
       if (registerUser.rejected.match(resultAction)) {
+        // Show only one alert - prioritize the general message
+        if (resultAction.payload?.message) {
+          alert(resultAction.payload.message);
+        } else if (resultAction.payload?.errors && resultAction.payload.errors.length > 0) {
+          // If no general message, show the first meaningful field error
+          const firstError = resultAction.payload.errors.find(err => err.msg && err.msg.trim() !== '');
+          if (firstError) {
+            alert(firstError.msg);
+          }
+        }
+        
+        // Still set form errors for field validation display
         if (resultAction.payload?.errors) {
           const apiErrors = {};
           resultAction.payload.errors.forEach((err) => {
-            apiErrors[err.path] = err.msg;
+            if (err.msg && err.msg.trim() !== '') {
+              apiErrors[err.path] = err.msg;
+            }
           });
           setErrors(apiErrors);
         }
+      } else if (registerUser.fulfilled.match(resultAction)) {
+        // Show success alert
+        alert('Регистрация успешно завершена!');
       }
     } catch (err) {
       console.error('Registration error:', err);
+      alert('Произошла ошибка при регистрации');
     } finally {
       setSubmitting(false);
     }
@@ -66,8 +91,6 @@ const RegisterForm = () => {
 
   return (
     <div className={s.registerContainer}>
-
-      
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -76,11 +99,7 @@ const RegisterForm = () => {
           <Form className={s.registerForm}>
             <h2 className={s.title}>Регистрация</h2>
 
-            {error && !error.errors && (
-              <div className={s.error} style={{ marginBottom: '15px', textAlign: 'center' }}>
-                {error.message || 'Ошибка регистрации'}
-              </div>
-            )}
+            {/* Remove the error display div since we're using notifications now */}
 
             <div className={s.formGroup}>
               <label htmlFor="username" className={s.label}>
@@ -145,7 +164,7 @@ const RegisterForm = () => {
             <div className={s.loginLink}>
               Уже есть аккаунт?{' '}
               <Link to="/login" className={s.loginLinkText}>
-                Войдите
+                Войти
               </Link>
             </div>
           </Form>

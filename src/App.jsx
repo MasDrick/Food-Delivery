@@ -13,6 +13,8 @@ import NotFound from './pages/NotFound';
 import OrderConfirmation from './pages/OrderConfirmation';
 import { checkAuthStatus } from './store/slices/authSlice';
 import s from './app.module.scss';
+import Admin from './pages/Admin';  // Add this import
+import Notification from './components/Notification';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +54,7 @@ function App() {
   return (
     <div className={s.wrapper}>
       <Header />
+      <Notification /> {/* Make sure this is here */}
       <Routes>
         {/* Публичные маршруты */}
         <Route path="/" element={<Home />} />
@@ -61,6 +64,9 @@ function App() {
         <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
         <Route path="/orders/:orderId" element={isAuthenticated ? <OrderConfirmation /> : <Navigate to="/login" />} />
+        
+        {/* Admin route - add this */}
+        <Route path="/admin" element={isAuthenticated ? <Admin /> : <Navigate to="/login" />} />
         
         {/* 404 страница */}
         <Route path="*" element={<NotFound />} />

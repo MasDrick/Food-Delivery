@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, MapPin, Phone, Clock, ShoppingBag } from 'lucide-react';
+import { ChevronDown, ChevronUp, MapPin, Phone, Clock, ShoppingBag, Percent } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import s from './OrderHistoryCard.module.scss';
 
@@ -11,7 +11,7 @@ const statusMap = {
   cancelled: { label: 'Отменён', className: s.statusCancelled },
 };
 
-const OrderHistoryCard = ({ order }) => {
+const OrderHistoryCard = ({ order, discountPercent }) => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const status = statusMap[order.status] || { label: order.status, className: '' };
@@ -30,6 +30,17 @@ const OrderHistoryCard = ({ order }) => {
     hour: '2-digit',
     minute: '2-digit'
   });
+  
+  // Calculate discount amount if applicable
+  const hasDiscount = discountPercent && Number(discountPercent) > 0;
+  const discountAmount = hasDiscount 
+    ? (Number(order.total_amount) * (Number(discountPercent) / 100)).toFixed(2) 
+    : 0;
+  
+  // Calculate final total after discount
+  const finalTotal = hasDiscount 
+    ? (Number(order.total_amount) - Number(discountAmount)).toFixed(2) 
+    : Number(order.total_amount);
 
   return (
     <div className={`${s.card} ${expanded ? s.expanded : ''}`}>
@@ -61,7 +72,14 @@ const OrderHistoryCard = ({ order }) => {
         <div className={s.summaryAmount}>
           <span className={s.totalLabel}>Итого:</span>
           <span className={s.totalValue}>
-            {Number(order.total_amount) + Number(order.delivery_fee)} ₽
+            {hasDiscount ? (
+              <>
+                <span className={s.originalPrice}>{Number(order.total_amount)} ₽</span>
+                {finalTotal} ₽
+              </>
+            ) : (
+              `${Number(order.total_amount)} ₽`
+            )}
           </span>
         </div>
         
@@ -106,16 +124,24 @@ const OrderHistoryCard = ({ order }) => {
           <div className={s.totals}>
             <div className={s.totalRow}>
               <span>Стоимость блюд:</span>
-              <span>{Number(order.total_amount)} ₽</span>
+              <span>{Number(order.total_amount) - Number(order.delivery_fee)} ₽</span>
             </div>
             <div className={s.totalRow}>
               <span>Доставка:</span>
               <span>{Number(order.delivery_fee)} ₽</span>
             </div>
+            {hasDiscount && (
+              <div className={`${s.totalRow} ${s.discountRow}`}>
+                <span>
+                  Скидка ({discountPercent}%):
+                </span>
+                <span className={s.discountAmount}>-{discountAmount} ₽</span>
+              </div>
+            )}
             <div className={`${s.totalRow} ${s.finalTotal}`}>
               <span>Итого:</span>
               <span>
-                {Number(order.total_amount) + Number(order.delivery_fee)} ₽
+                {hasDiscount ? finalTotal : Number(order.total_amount)} ₽
               </span>
             </div>
           </div>

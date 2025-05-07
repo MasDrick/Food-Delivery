@@ -14,19 +14,10 @@ export const createOrder = createAsyncThunk(
       const { auth } = getState();
       const token = auth.token || localStorage.getItem('token');
       
-      // Modify the orderData to match the expected backend structure
-      // Remove the comment field if the database doesn't have this column
+      // Use the orderData directly without removing the comment field
       const modifiedOrderData = {
-        ...orderData,
-        // If you need to store the comment, you could add it to another field
-        // that exists in your database, for example:
-        // delivery_notes: orderData.comment
+        ...orderData
       };
-      
-      // If you don't need the comment at all, you can delete it
-      if (modifiedOrderData.comment !== undefined) {
-        delete modifiedOrderData.comment;
-      }
       
       console.log('Sending modified order data:', modifiedOrderData);
       

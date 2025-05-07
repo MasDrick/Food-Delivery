@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 import { ShoppingBag, Trash2, Plus, Minus, ArrowLeft } from 'lucide-react';
+import { IMaskInput } from 'react-imask';
 import { addToCart, clearCart, clearRestaurantItems } from '../../store/slices/cartSlice';
 import { createOrder } from '../../store/slices/orderSlice';
 import s from './Cart.module.scss';
@@ -73,6 +74,14 @@ const Cart = () => {
     setDeliveryInfo(prev => ({
       ...prev,
       [name]: value
+    }));
+  };
+  
+  // Handle phone input change with mask
+  const handlePhoneChange = (value) => {
+    setDeliveryInfo(prev => ({
+      ...prev,
+      phone: value
     }));
   };
   
@@ -182,15 +191,17 @@ const Cart = () => {
             
             <div className={s.formGroup}>
               <label htmlFor="phone">Телефон *</label>
-              <input
-                type="tel"
+              <IMaskInput
                 id="phone"
                 name="phone"
+                mask="+7 (000) 000-00-00"
+                unmask={false}
+                lazy={false}
                 value={deliveryInfo.phone}
-                onChange={handleInputChange}
-                required
+                onAccept={handlePhoneChange}
                 placeholder="+7 (___) ___-__-__"
                 className={s.formInput}
+                required
               />
             </div>
             

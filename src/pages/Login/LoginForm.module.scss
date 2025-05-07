@@ -70,16 +70,16 @@
 .input {
   width: 100%;
   padding: 12px 15px;
-  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
   color: var(--text-color-dark);
-  border: 1px solid var(--border-bg);
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
 
   &:focus {
-    border-color: var(--primary-color);
     outline: none;
+    border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(169, 112, 224, 0.2);
   }
 
