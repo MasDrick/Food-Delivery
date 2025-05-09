@@ -387,11 +387,20 @@
   align-items: center;
   margin-bottom: 12px;
 }
+.mg {
+  margin: 0 !important;
+}
 
 .orderNumber {
   font-weight: 600;
   font-size: 16px;
   color: var(--text-color-dark);
+  position: relative;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--primary-color);
+  }
 }
 
 .orderStatus {
@@ -522,7 +531,7 @@
     color: var(--text-color-light);
     font-size: 15px;
   }
-  
+
   .orderCount {
     background-color: var(--primary-color);
     color: white;
@@ -541,7 +550,7 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
+
   h3 {
     font-size: 18px;
     margin-bottom: 16px;
@@ -556,7 +565,7 @@
   padding: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
-  
+
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
@@ -637,4 +646,457 @@
   margin-top: 16px;
   text-align: center;
   width: 100%;
+}
+// Add these styles to your existing Admin.module.scss file
+
+// Orders Management Styles
+.ordersManagementContent {
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
+
+.ordersControls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.searchContainer {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-light);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-color-dark);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(169, 112, 224, 0.2);
+  }
+
+  &::placeholder {
+    color: var(--text-color-dark);
+  }
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filterIcon {
+  color: var(--text-color-light);
+}
+
+.filterButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filterButton {
+  padding: 6px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-light);
+  font-size: 13px;
+  color: var(--text-color-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+
+  &.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+
+  &.pending {
+    &.active {
+      background-color: var(--warning-color);
+      border-color: var(--warning-color);
+      color: var(--warning-type);
+    }
+  }
+
+  &.processing {
+    &.active {
+      background-color: var(--pending-color);
+      border-color: var(--pending-color);
+      color: var(--pending-type);
+    }
+  }
+
+  &.delivering {
+    &.active {
+      background-color: var(--info-color);
+      border-color: var(--info-color);
+      color: var(--info-type);
+    }
+  }
+
+  &.completed {
+    &.active {
+      background-color: var(--success-color);
+      border-color: var(--success-color);
+      color: var(--success-type);
+    }
+  }
+
+  &.cancelled {
+    &.active {
+      background-color: var(--error-color);
+      border-color: var(--error-color);
+      color: var(--error-type);
+    }
+  }
+}
+
+.ordersSortHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 50px 12px 32px;
+  background-color: var(--wrapper-color);
+  border-radius: 8px 8px 0 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-color-light);
+
+  > div {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.sortColumn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
+.sortIcon {
+  opacity: 0.6;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.orderItem {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.orderSummary {
+  display: grid;
+  grid-template-columns: 0.2fr 1.2fr 0.8fr 0.8fr 0.8fr 0.8fr;
+  gap: 10px;
+  padding: 16px;
+  align-items: center;
+  transition: background-color 0.2s ease;
+
+  > div {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.orderNumber {
+  font-weight: 600;
+  color: var(--text-color-dark);
+  cursor: pointer;
+}
+
+.orderWrap {
+  display: flex;
+  flex-direction: column;
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+
+    background: rgba(169, 112, 224, 0.05);
+    border: none;
+    border-top: 1px solid var(--border-color);
+    color: var(--primary-color);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--border-color);
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+.orderDate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-color-light);
+}
+
+.orderUser {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-color-dark);
+}
+
+.orderAmount {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--primary-color);
+}
+
+.orderStatus {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  width: fit-content; /* можно оставить */
+  margin: 0 auto;
+}
+
+.orderActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.statusSelect {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-color-dark);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+}
+
+.orderDetails {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-light);
+}
+
+.orderInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-color-light);
+}
+
+.infoLabel {
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.infoValue {
+  color: var(--text-color-dark);
+}
+
+.orderComment {
+  grid-column: 1 / -1;
+  padding: 12px;
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.commentLabel {
+  font-weight: 500;
+  margin-right: 8px;
+  color: var(--text-color-light);
+}
+
+.commentText {
+  color: var(--text-color-dark);
+}
+
+.orderItems {
+  h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--text-color-dark);
+  }
+}
+
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th {
+    text-align: left;
+    padding: 10px;
+    background-color: var(--wrapper-color);
+    color: var(--text-color-light);
+    font-weight: 500;
+  }
+
+  td {
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-color-dark);
+  }
+
+  tfoot {
+    td {
+      border-top: 1px solid var(--border-color);
+    }
+  }
+}
+
+.totalLabel {
+  text-align: right;
+  font-weight: 500;
+  color: var(--text-color-light);
+}
+
+.totalAmount {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.noOrders {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-color-light);
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  font-style: italic;
+}
+
+// Responsive adjustments
+@media (max-width: 992px) {
+  .ordersSortHeader {
+    grid-template-columns: 0.5fr 1fr 1fr 0.8fr 0.8fr;
+
+    &:last-child {
+      display: none;
+    }
+  }
+
+  .orderSummary {
+    grid-template-columns: 0.5fr 1fr 1fr 0.8fr 0.8fr;
+
+    .orderActions {
+      display: none;
+    }
+  }
+
+  .orderDetails {
+    .statusSelect {
+      display: block;
+      margin-top: 16px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .ordersSortHeader {
+    display: none;
+  }
+
+  .orderSummary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+
+    .orderNumber,
+    .orderDate,
+    .orderUser,
+    .orderAmount,
+    .orderStatus {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      &:before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: var(--text-color-light);
+      }
+    }
+  }
+
+  .itemsTable {
+    display: block;
+    overflow-x: auto;
+  }
 }

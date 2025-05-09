@@ -8,6 +8,7 @@ import cartReducer from "./slices/cartSlice";
 import orderReducer from "./slices/orderSlice";
 import notificationReducer from "./slices/notificationSlice";
 import dashboardReducer from "./slices/dashboardSlice";
+import adminOrdersReducer from "./slices/adminOrdersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     orders: orderReducer,
     notification: notificationReducer,
     dashboard: dashboardReducer,
+    adminOrders: adminOrdersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

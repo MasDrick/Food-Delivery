@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
 import { Users, ShoppingBag, Settings, BarChart2 } from "lucide-react";
 import { fetchDashboardData } from "../../store/slices/dashboardSlice";
+import { fetchAdminOrders } from "../../store/slices/adminOrdersSlice";
 import s from "./Admin.module.scss";
 import Dashboard from "./Dashboard"; // Import the Dashboard component
+import Orders from "./Orders"; // Import the Orders component
 
 const AdminPanel = () => {
   const { userProfile } = useSelector((state) => state.profile || {});
@@ -14,6 +16,8 @@ const AdminPanel = () => {
   useEffect(() => {
     if (activeTab === "dashboard") {
       dispatch(fetchDashboardData());
+    } else if (activeTab === "orders") {
+      dispatch(fetchAdminOrders());
     }
   }, [activeTab, dispatch]);
 
@@ -27,12 +31,7 @@ const AdminPanel = () => {
       case "dashboard":
         return <Dashboard />;
       case "orders":
-        return (
-          <div className={s.ordersContent}>
-            <h2>Управление заказами</h2>
-            <p>Здесь будет список заказов и возможность управления ими.</p>
-          </div>
-        );
+        return <Orders />;
       case "users":
         return (
           <div className={s.usersContent}>

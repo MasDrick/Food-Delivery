@@ -14,7 +14,7 @@ const Dashboard = () => {
     monthlyRevenue,
     topSpender, // Добавляем получение данных о топ-пользователе
     loading,
-    error
+    error,
   } = useSelector((state) => state.dashboard);
 
   if (loading) {
@@ -28,55 +28,62 @@ const Dashboard = () => {
   // Format date for display
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', { 
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleDateString("ru-RU", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   // Format month for display
   const formatMonth = (monthString) => {
-    const [year, month] = monthString.split('-');
+    const [year, month] = monthString.split("-");
     const date = new Date(year, month - 1);
-    return date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+    return date.toLocaleDateString("ru-RU", { month: "long", year: "numeric" });
   };
 
   // Translate status to Russian
   const getStatusText = (status) => {
     switch (status) {
-      case 'pending': return 'В обработке';
-      case 'processing': return 'Готовится';
-      case 'delivering': return 'Доставляется';
-      case 'completed': return 'Выполнен';
-      case 'cancelled': return 'Отменен';
-      default: return status;
+      case "pending":
+        return "В обработке";
+      case "processing":
+        return "Готовится";
+      case "delivering":
+        return "Доставляется";
+      case "completed":
+        return "Выполнен";
+      case "cancelled":
+        return "Отменен";
+      default:
+        return status;
     }
   };
 
   // Find max revenue for chart scaling
-  const maxRevenue = monthlyRevenue && monthlyRevenue.length > 0
-    ? Math.max(...monthlyRevenue.map(item => parseFloat(item.revenue)))
-    : 0;
+  const maxRevenue =
+    monthlyRevenue && monthlyRevenue.length > 0
+      ? Math.max(...monthlyRevenue.map((item) => parseFloat(item.revenue)))
+      : 0;
 
   // Добавим функцию для форматирования чисел
   const formatNumber = (value) => {
     // Проверяем, является ли значение строкой с числом
-    const numValue = typeof value === 'string' ? parseFloat(value) : value;
-    
+    const numValue = typeof value === "string" ? parseFloat(value) : value;
+
     // Используем toLocaleString для форматирования с пробелами между тысячами
-    return numValue.toLocaleString('ru-RU');
+    return numValue.toLocaleString("ru-RU");
   };
 
   // Добавим функцию для форматирования даты регистрации
   const formatRegistrationDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', { 
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
+    return date.toLocaleDateString("ru-RU", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   };
 
@@ -101,7 +108,7 @@ const Dashboard = () => {
           <p className={s.statValue}>₽{formatNumber(totalRevenue)}</p>
         </div>
       </div>
-      
+
       <div className={s.dashboardSections}>
         <div className={s.ordersSection}>
           <h3>Последние заказы</h3>
@@ -111,16 +118,24 @@ const Dashboard = () => {
                 <div key={order.id} className={s.orderItem}>
                   <div className={s.orderHeader}>
                     <span className={s.orderNumber}>Заказ #{order.id}</span>
-                    <span className={`${s.orderStatus} ${s[order.status]}`}>
+                    <span
+                      className={`${s.orderStatus} ${s[order.status]} ${s.mg}`}
+                    >
                       {getStatusText(order.status)}
                     </span>
                   </div>
                   <div className={s.orderDetails}>
                     <div className={s.orderInfo}>
-                      <span className={s.orderDate}>{formatDate(order.created_at)}</span>
-                      <span className={s.orderUser}>Пользователь: {order.username}</span>
+                      <span className={s.orderDate}>
+                        {formatDate(order.created_at)}
+                      </span>
+                      <span className={s.orderUser}>
+                        Пользователь: {order.username}
+                      </span>
                     </div>
-                    <div className={s.orderAmount}>₽{formatNumber(order.total_amount)}</div>
+                    <div className={s.orderAmount}>
+                      ₽{formatNumber(order.total_amount)}
+                    </div>
                   </div>
                 </div>
               ))
@@ -128,7 +143,7 @@ const Dashboard = () => {
               <p>Нет недавних заказов</p>
             )}
           </div>
-          
+
           {/* Добавляем секцию ежемесячной выручки */}
           <div className={s.monthlyRevenueSection}>
             <h3>Ежемесячная выручка</h3>
@@ -140,14 +155,17 @@ const Dashboard = () => {
                       <div className={s.barLabel}>
                         {formatMonth(item.month).toLowerCase()}
                       </div>
-                      <div 
-                        className={s.revenueBar} 
-                        style={{ 
-                          height: `${(parseFloat(item.revenue) / maxRevenue) * 180}px` 
+                      <div
+                        className={s.revenueBar}
+                        style={{
+                          height: `${
+                            (parseFloat(item.revenue) / maxRevenue) * 180
+                          }px`,
                         }}
-                      >
+                      ></div>
+                      <div className={s.barValue}>
+                        ₽{formatNumber(item.revenue)}
                       </div>
-                      <div className={s.barValue}>₽{formatNumber(item.revenue)}</div>
                     </div>
                   ))}
                 </div>
@@ -159,7 +177,9 @@ const Dashboard = () => {
                   {monthlyRevenue.map((item) => (
                     <div key={item.month} className={s.tableRow}>
                       <span>{formatMonth(item.month).toLowerCase()}</span>
-                      <span className={s.revenueAmount}>₽{formatNumber(item.revenue)}</span>
+                      <span className={s.revenueAmount}>
+                        ₽{formatNumber(item.revenue)}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -169,7 +189,7 @@ const Dashboard = () => {
             )}
           </div>
         </div>
-        
+
         <div className={s.statsSection}>
           <div className={s.statusSummary}>
             <h3>Статусы заказов</h3>
@@ -177,8 +197,12 @@ const Dashboard = () => {
               {ordersByStatus && ordersByStatus.length > 0 ? (
                 ordersByStatus.map((item) => (
                   <div key={item.status} className={s.statusItem}>
-                    <div className={`${s.statusIndicator} ${s[item.status]}`}></div>
-                    <span className={s.statusName}>{getStatusText(item.status)}</span>
+                    <div
+                      className={`${s.statusIndicator} ${s[item.status]}`}
+                    ></div>
+                    <span className={s.statusName}>
+                      {getStatusText(item.status)}
+                    </span>
                     <span className={s.statusCount}>{item.count}</span>
                   </div>
                 ))
@@ -187,7 +211,7 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-          
+
           <div className={s.topRestaurantsSection}>
             <h3>Популярные рестораны</h3>
             <div className={s.restaurantsList}>
@@ -195,7 +219,9 @@ const Dashboard = () => {
                 topRestaurants.map((restaurant) => (
                   <div key={restaurant.id} className={s.restaurantItem}>
                     <span className={s.restaurantName}>{restaurant.name}</span>
-                    <span className={s.orderCount}>Заказов: {restaurant.order_count}</span>
+                    <span className={s.orderCount}>
+                      Заказов: {restaurant.order_count}
+                    </span>
                   </div>
                 ))
               ) : (
@@ -203,7 +229,7 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-          
+
           {/* Добавляем карточку с топ-пользователем */}
           {topSpender && (
             <div className={s.topSpenderSection}>
@@ -211,37 +237,42 @@ const Dashboard = () => {
               <div className={s.topSpenderCard}>
                 <div className={s.topSpenderInfo}>
                   {topSpender.profile_image ? (
-                    <img 
-                      src={topSpender.profile_image} 
-                      alt={topSpender.username} 
-                      className={s.topSpenderAvatar} 
+                    <img
+                      src={topSpender.profile_image}
+                      alt={topSpender.username}
+                      className={s.topSpenderAvatar}
                     />
                   ) : (
-                    <img 
-                      src="/user-round.svg" 
-                      alt="Default user" 
-                      className={s.topSpenderAvatar} 
+                    <img
+                      src="/user-round.svg"
+                      alt="Default user"
+                      className={s.topSpenderAvatar}
                     />
                   )}
-                  
+
                   <div className={s.topSpenderName}>{topSpender.username}</div>
                   <div className={s.topSpenderContact}>
                     <div>{topSpender.email}</div>
                   </div>
-                  
+
                   <div className={s.topSpenderStatsRow}>
                     <div className={s.topSpenderStatItem}>
                       <span className={s.statLabel}>Заказов</span>
-                      <span className={s.statValue}>{topSpender.order_count}</span>
+                      <span className={s.statValue}>
+                        {topSpender.order_count}
+                      </span>
                     </div>
                     <div className={s.topSpenderStatItem}>
                       <span className={s.statLabel}>Потрачено</span>
-                      <span className={s.topSpenderAmount}>₽{formatNumber(topSpender.total_spent)}</span>
+                      <span className={s.topSpenderAmount}>
+                        ₽{formatNumber(topSpender.total_spent)}
+                      </span>
                     </div>
                   </div>
-                  
+
                   <div className={s.topSpenderDate}>
-                    С нами с {formatRegistrationDate(topSpender.registration_date)}
+                    С нами с{" "}
+                    {formatRegistrationDate(topSpender.registration_date)}
                   </div>
                 </div>
               </div>
