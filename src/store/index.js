@@ -1,12 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
-import restaurantReducer from './slices/restaurantSlice';
-import categoriesReducer from './slices/categoriesSlice';
-import profileReducer from './slices/profileSlice'; // Changed from profileSlice to profileslice
-import themeReducer from './slices/themeSlice';
-import cartReducer from './slices/cartSlice';
-import orderReducer from './slices/orderSlice';
-import notificationReducer from './slices/notificationSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./slices/authSlice";
+import restaurantReducer from "./slices/restaurantSlice";
+import categoriesReducer from "./slices/categoriesSlice";
+import profileReducer from "./slices/profileSlice"; // Changed from profileSlice to profileslice
+import themeReducer from "./slices/themeSlice";
+import cartReducer from "./slices/cartSlice";
+import orderReducer from "./slices/orderSlice";
+import notificationReducer from "./slices/notificationSlice";
+import dashboardReducer from "./slices/dashboardSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,12 +18,13 @@ export const store = configureStore({
     profile: profileReducer, // Make sure this is included
     cart: cartReducer,
     orders: orderReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    dashboard: dashboardReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    })
+    }),
 });
 
 export default store;

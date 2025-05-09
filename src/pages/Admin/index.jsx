@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
 import { Users, ShoppingBag, Settings, BarChart2 } from "lucide-react";
+import { fetchDashboardData } from "../../store/slices/dashboardSlice";
 import s from "./Admin.module.scss";
+import Dashboard from "./Dashboard"; // Import the Dashboard component
 
 const AdminPanel = () => {
   const { userProfile } = useSelector((state) => state.profile || {});
   const [activeTab, setActiveTab] = useState("dashboard");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (activeTab === "dashboard") {
+      dispatch(fetchDashboardData());
+    }
+  }, [activeTab, dispatch]);
 
   // Check if user is admin
   if (!userProfile || userProfile.role !== "admin") {
@@ -16,50 +25,7 @@ const AdminPanel = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
-        return (
-          <div className={s.dashboardContent}>
-            <h2>Панель управления</h2>
-            <div className={s.statsGrid}>
-              <div className={s.statCard}>
-                <h3>Всего заказов</h3>
-                <p className={s.statValue}>245</p>
-              </div>
-              <div className={s.statCard}>
-                <h3>Активных пользователей</h3>
-                <p className={s.statValue}>128</p>
-              </div>
-              <div className={s.statCard}>
-                <h3>Рестораны</h3>
-                <p className={s.statValue}>18</p>
-              </div>
-              <div className={s.statCard}>
-                <h3>Выручка</h3>
-                <p className={s.statValue}>₽156,890</p>
-              </div>
-            </div>
-            <div className={s.recentActivity}>
-              <h3>Последние действия</h3>
-              <div className={s.activityList}>
-                <div className={s.activityItem}>
-                  <span className={s.activityTime}>10:45</span>
-                  <span className={s.activityText}>
-                    Новый заказ #1234 создан
-                  </span>
-                </div>
-                <div className={s.activityItem}>
-                  <span className={s.activityTime}>09:30</span>
-                  <span className={s.activityText}>
-                    Пользователь Иван зарегистрировался
-                  </span>
-                </div>
-                <div className={s.activityItem}>
-                  <span className={s.activityTime}>08:15</span>
-                  <span className={s.activityText}>Заказ #1230 выполнен</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <Dashboard />;
       case "orders":
         return (
           <div className={s.ordersContent}>

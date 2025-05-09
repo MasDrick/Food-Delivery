@@ -71,7 +71,10 @@
   overflow-y: auto;
 }
 
-.dashboardContent, .ordersContent, .usersContent, .settingsContent {
+.dashboardContent,
+.ordersContent,
+.usersContent,
+.settingsContent {
   h2 {
     margin-top: 0;
     margin-bottom: 24px;
@@ -140,14 +143,14 @@
   padding: 10px;
   border-radius: 8px;
   background-color: var(--bg-secondary);
-  
+
   .activityTime {
     font-weight: 600;
     color: var(--primary-color);
     margin-right: 15px;
     min-width: 50px;
   }
-  
+
   .activityText {
     color: var(--text-color-light);
   }
@@ -158,29 +161,29 @@
   .adminContainer {
     flex-direction: column;
   }
-  
+
   .sidebar {
     width: 100%;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
   }
-  
+
   .sidebarNav {
     flex-direction: row;
     overflow-x: auto;
     padding-bottom: 10px;
   }
-  
+
   .navItem {
     border-left: none;
     border-bottom: 3px solid transparent;
-    
+
     &.active {
       border-left: none;
       border-bottom: 3px solid var(--primary-color);
     }
   }
-  
+
   .statsGrid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
@@ -190,8 +193,448 @@
   .statsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .content {
     padding: 20px 15px;
   }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-color-light);
+}
+
+.errorContainer {
+  padding: 16px;
+  background-color: #ffebee;
+  color: #d32f2f;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.dashboardContent {
+  padding: 20px;
+
+  h2 {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.statCard {
+  background-color: var(--wrapper-color);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  h3 {
+    font-size: 14px;
+    color: var(--text-color-light);
+    margin-bottom: 10px;
+  }
+
+  .statValue {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-color-dark);
+  }
+}
+
+.dashboardSections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+.ordersSection,
+.statsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ordersSection,
+.statusSummary,
+.topRestaurantsSection {
+  background-color: var(--wrapper-color);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+  }
+}
+
+.revenueChartContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 220px;
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  gap: 10px;
+}
+
+.revenueBarWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.barLabel {
+  position: absolute;
+  top: -25px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-color-light);
+  width: 100%;
+}
+
+.revenueBar {
+  width: 100%;
+  background-color: var(--primary-color);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.barValue {
+  position: absolute;
+  bottom: -25px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-color);
+  width: 100%;
+}
+
+.revenueTableContainer {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-weight: 600;
+  color: var(--text-color-light);
+  font-size: 14px;
+}
+
+.tableRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.revenueAmount {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.orderItem {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.orderNumber {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-color-dark);
+}
+
+.orderStatus {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+}
+
+.pending {
+  background-color: var(--warning-color);
+  color: var(--warning-type);
+}
+
+.processing {
+  background-color: var(--pending-color);
+  color: var(--pending-type);
+}
+
+.delivering {
+  background-color: var(--info-color);
+  color: var(--info-type);
+}
+
+.completed {
+  background-color: var(--success-color);
+  color: var(--success-type);
+}
+
+.cancelled {
+  background-color: var(--error-color);
+  color: var(--error-type);
+}
+
+.orderDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.orderDate {
+  font-size: 13px;
+  color: var(--text-color-light);
+}
+
+.orderUser {
+  font-size: 14px;
+  color: var(--text-color-dark);
+}
+
+.orderAmount {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+.statusList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.statusItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.statusIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.statusName {
+  flex-grow: 1;
+  font-size: 14px;
+  color: var(--text-color-dark);
+}
+
+.statusCount {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.restaurantsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.restaurantItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .restaurantName {
+    font-weight: 500;
+    color: var(--text-color-light);
+    font-size: 15px;
+  }
+  
+  .orderCount {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+  }
+}
+
+/* Стили для карточки топ-пользователя */
+.topSpenderSection {
+  background-color: var(--wrapper-color);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+  }
+}
+
+.topSpenderCard {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.topSpenderInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topSpenderAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--bg-secondary);
+  border: 3px solid var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.topSpenderName {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color-light);
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.topSpenderContact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  color: var(--text-color-light);
+  opacity: 0.8;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.topSpenderStatsRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.topSpenderStatItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 10px;
+}
+
+.statLabel {
+  color: var(--text-color-light);
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.statValue {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-color-dark);
+}
+
+.topSpenderAmount {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.topSpenderDate {
+  font-size: 13px;
+  color: var(--text-color-light);
+  opacity: 0.7;
+  margin-top: 16px;
+  text-align: center;
+  width: 100%;
 }
