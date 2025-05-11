@@ -54,6 +54,9 @@
 
 .metaInfo {
   margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .cuisine {
@@ -102,4 +105,31 @@
   &:hover svg {
     transform: translateX(2px);
   }
+}
+.cartInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  gap: 5px;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.cartItemsCount {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-color-dark);
+
+  svg {
+    margin-top: -5px;
+    color: var(--text-color-dark);
+  }
+}
+
+.cartTotalPrice {
+  font-weight: 600;
+  color: var(--primary-color);
 }

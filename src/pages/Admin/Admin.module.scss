@@ -676,7 +676,21 @@
 .searchContainer {
   position: relative;
   flex: 1;
-  max-width: 500px;
+  max-width: 350px;
+}
+
+.monthlyRevenueSection {
+  margin-top: 20px;
+}
+
+// Добавьте этот стиль в ваш файл Admin.module.scss
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: var(--primary-color);
 }
 
 .searchIcon {
@@ -1098,5 +1112,806 @@
   .itemsTable {
     display: block;
     overflow-x: auto;
+  }
+}
+// Add these styles to your existing Admin.module.scss file
+
+// Users Management Styles
+.usersManagementContent {
+  h2 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color-light);
+  }
+}
+
+.usersControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.addUserButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.usersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.userCard {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.userCardHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+}
+
+// Update the adminBadge class to bring it to the front
+
+.adminBadge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background-color: var(--success-color);
+  color: var(--success-type);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--card-bg);
+  z-index: 5; /* Increase z-index value */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  pointer-events: none; /* Prevent badge from blocking interactions */
+}
+
+/* Remove the overflow: hidden from userAvatar to allow the badge to be visible outside its bounds */
+.userAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  /* Remove overflow: hidden */
+  margin-right: 16px;
+  background-color: var(--primary-color);
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* Add border-radius to the image instead */
+  }
+}
+
+.userAvatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+  border-radius: 50%;
+  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userName {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color-light);
+  margin-bottom: 4px;
+}
+
+.userEmail {
+  font-size: 14px;
+  color: var(--text-color-dark);
+}
+
+.userActions {
+  position: relative;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--text-color-light);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+}
+
+.actionMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  z-index: 10;
+  min-width: 180px;
+  overflow: hidden;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    color: var(--text-color-light);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--bg-secondary);
+    }
+
+    &.deleteButton {
+      color: var(--error-color);
+    }
+  }
+}
+
+.userCardBody {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.userDetail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-color-dark);
+
+  svg {
+    color: var(--primary-color);
+    opacity: 0.8;
+  }
+}
+
+.userCardFooter {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userStatus {
+  span {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .loyalBadge {
+    background-color: var(--success-color);
+    color: var(--success-type);
+  }
+
+  .activeBadge {
+    background-color: var(--info-color);
+    color: var(--info-type);
+  }
+
+  .newBadge {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .blockedBadge {
+    background-color: var(--error-color);
+    color: var(--error-type);
+  }
+}
+
+.viewDetailsButton {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Responsive styles for users management
+@media (max-width: 992px) {
+  .usersGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .usersControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchContainer {
+    max-width: 100%;
+  }
+
+  .filterContainer {
+    width: 100%;
+  }
+
+  .filterButtons {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .addUserButton {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 576px) {
+  .usersGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .userCardBody {
+    grid-template-columns: 1fr;
+  }
+}
+// Add these modal styles to your existing Admin.module.scss file
+
+// Modal styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.modalContent {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-color-light);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+}
+
+.modalTitle {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color-light);
+}
+
+.modalMessage {
+  margin-bottom: 24px;
+  color: var(--text-color-dark);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color-light);
+  }
+
+  input {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color-dark);
+    background-color: var(--bg-light);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(169, 112, 224, 0.2);
+    }
+  }
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancelButton {
+  padding: 10px 16px;
+  background-color: var(--bg-secondary);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--border-color);
+  }
+}
+
+.submitButton,
+.confirmButton {
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
+}
+
+.deleteConfirmButton {
+  padding: 10px 16px;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+}
+
+.userCardFooter {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+}
+
+// Add these settings styles to your existing Admin.module.scss file
+
+// Settings styles
+.settingsContent {
+  h2 {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color-light);
+  }
+}
+
+.settingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.settingsCard {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.settingsCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--wrapper-color);
+  border-bottom: 1px solid var(--border-color);
+
+  svg {
+    color: var(--primary-color);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color-light);
+  }
+}
+
+.settingsCardBody {
+  padding: 16px;
+
+  p {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: var(--text-color-dark);
+    font-size: 14px;
+  }
+}
+
+.settingsLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settingsLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+  }
+}
+
+.settingsInfo {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.settingsInfoItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.settingsInfoLabel {
+  font-weight: 500;
+  color: var(--text-color-light);
+}
+
+.settingsInfoValue {
+  color: var(--text-color-dark);
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color-light);
+  }
+
+  input,
+  textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color-dark);
+    background-color: var(--bg-light);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(169, 112, 224, 0.2);
+    }
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+}
+
+.saveButton {
+  align-self: flex-end;
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--secondary-color);
+  }
+}
+
+.settingsOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settingsOption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    color: var(--text-color-light);
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-color-dark);
+  }
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .toggleSlider {
+      background-color: var(--primary-color);
+    }
+
+    &:checked + .toggleSlider:before {
+      transform: translateX(24px);
+    }
+  }
+}
+
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-color);
+  transition: 0.4s;
+  border-radius: 34px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+}
+
+.apiKeys {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.apiKeyItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: var(--text-color-light);
+  }
+}
+
+.apiKeyValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  input {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color-dark);
+    background-color: var(--bg-light);
+    width: 200px;
+  }
+}
+
+.showButton {
+  padding: 8px;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-color-light);
+  font-size: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+}
+
+.regenerateButton {
+  padding: 8px 12px;
+  background-color: var(--bg-secondary);
+  color: var(--text-color-light);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--border-color);
+  }
+}
+
+// Responsive styles for settings
+@media (max-width: 992px) {
+  .settingsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .apiKeyItem {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .regenerateButton {
+    align-self: flex-end;
   }
 }

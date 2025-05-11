@@ -23,12 +23,7 @@ const RegisterForm = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Show error alert when error state changes
-  useEffect(() => {
-    if (error) {
-      alert(error.message || 'Ошибка регистрации');
-    }
-  }, [error]);
+  // Remove the error alert useEffect
 
   const initialValues = {
     username: '',
@@ -56,18 +51,7 @@ const RegisterForm = () => {
       const resultAction = await dispatch(registerUser(values));
       
       if (registerUser.rejected.match(resultAction)) {
-        // Show only one alert - prioritize the general message
-        if (resultAction.payload?.message) {
-          alert(resultAction.payload.message);
-        } else if (resultAction.payload?.errors && resultAction.payload.errors.length > 0) {
-          // If no general message, show the first meaningful field error
-          const firstError = resultAction.payload.errors.find(err => err.msg && err.msg.trim() !== '');
-          if (firstError) {
-            alert(firstError.msg);
-          }
-        }
-        
-        // Still set form errors for field validation display
+        // Set form errors for field validation display
         if (resultAction.payload?.errors) {
           const apiErrors = {};
           resultAction.payload.errors.forEach((err) => {
@@ -77,13 +61,11 @@ const RegisterForm = () => {
           });
           setErrors(apiErrors);
         }
-      } else if (registerUser.fulfilled.match(resultAction)) {
-        // Show success alert
-        alert('Регистрация успешно завершена!');
       }
+      // Remove success alert
     } catch (err) {
       console.error('Registration error:', err);
-      alert('Произошла ошибка при регистрации');
+      // Remove error alert
     } finally {
       setSubmitting(false);
     }

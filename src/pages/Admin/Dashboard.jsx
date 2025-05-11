@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+
 import s from "./Admin.module.scss";
 
 const Dashboard = () => {
@@ -12,10 +14,16 @@ const Dashboard = () => {
     recentOrders,
     topRestaurants,
     monthlyRevenue,
-    topSpender, // Добавляем получение данных о топ-пользователе
+    topSpender,
     loading,
     error,
   } = useSelector((state) => state.dashboard);
+
+  const navigate = useNavigate();
+
+  const handleOrderClick = (orderId) => {
+    navigate(`/orders/${orderId}`);
+  };
 
   if (loading) {
     return <div className={s.loading}>Загрузка...</div>;
@@ -25,7 +33,6 @@ const Dashboard = () => {
     return <div className={s.errorContainer}>Ошибка: {error}</div>;
   }
 
-  // Format date for display
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("ru-RU", {
@@ -37,14 +44,12 @@ const Dashboard = () => {
     });
   };
 
-  // Format month for display
   const formatMonth = (monthString) => {
     const [year, month] = monthString.split("-");
     const date = new Date(year, month - 1);
     return date.toLocaleDateString("ru-RU", { month: "long", year: "numeric" });
   };
 
-  // Translate status to Russian
   const getStatusText = (status) => {
     switch (status) {
       case "pending":
@@ -62,22 +67,16 @@ const Dashboard = () => {
     }
   };
 
-  // Find max revenue for chart scaling
   const maxRevenue =
     monthlyRevenue && monthlyRevenue.length > 0
       ? Math.max(...monthlyRevenue.map((item) => parseFloat(item.revenue)))
       : 0;
 
-  // Добавим функцию для форматирования чисел
   const formatNumber = (value) => {
-    // Проверяем, является ли значение строкой с числом
     const numValue = typeof value === "string" ? parseFloat(value) : value;
-
-    // Используем toLocaleString для форматирования с пробелами между тысячами
     return numValue.toLocaleString("ru-RU");
   };
 
-  // Добавим функцию для форматирования даты регистрации
   const formatRegistrationDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("ru-RU", {
@@ -117,7 +116,12 @@ const Dashboard = () => {
               recentOrders.map((order) => (
                 <div key={order.id} className={s.orderItem}>
                   <div className={s.orderHeader}>
-                    <span className={s.orderNumber}>Заказ #{order.id}</span>
+                    <span
+                      onClick={() => handleOrderClick(order.id)}
+                      className={s.orderNumber}
+                    >
+                      Заказ #{order.id}
+                    </span>
                     <span
                       className={`${s.orderStatus} ${s[order.status]} ${s.mg}`}
                     >
@@ -141,51 +145,6 @@ const Dashboard = () => {
               ))
             ) : (
               <p>Нет недавних заказов</p>
-            )}
-          </div>
-
-          {/* Добавляем секцию ежемесячной выручки */}
-          <div className={s.monthlyRevenueSection}>
-            <h3>Ежемесячная выручка</h3>
-            {monthlyRevenue && monthlyRevenue.length > 0 ? (
-              <>
-                <div className={s.revenueChartContainer}>
-                  {monthlyRevenue.map((item) => (
-                    <div key={item.month} className={s.revenueBarWrapper}>
-                      <div className={s.barLabel}>
-                        {formatMonth(item.month).toLowerCase()}
-                      </div>
-                      <div
-                        className={s.revenueBar}
-                        style={{
-                          height: `${
-                            (parseFloat(item.revenue) / maxRevenue) * 180
-                          }px`,
-                        }}
-                      ></div>
-                      <div className={s.barValue}>
-                        ₽{formatNumber(item.revenue)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className={s.revenueTableContainer}>
-                  <div className={s.tableHeader}>
-                    <span>Месяц</span>
-                    <span>Выручка</span>
-                  </div>
-                  {monthlyRevenue.map((item) => (
-                    <div key={item.month} className={s.tableRow}>
-                      <span>{formatMonth(item.month).toLowerCase()}</span>
-                      <span className={s.revenueAmount}>
-                        ₽{formatNumber(item.revenue)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <p>Нет данных о ежемесячной выручке</p>
             )}
           </div>
         </div>
@@ -230,7 +189,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Добавляем карточку с топ-пользователем */}
           {topSpender && (
             <div className={s.topSpenderSection}>
               <h3>Лучший клиент</h3>
@@ -279,6 +237,51 @@ const Dashboard = () => {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Новый блок для ежемесячной выручки */}
+      <div className={s.monthlyRevenueSection}>
+        <h3>Ежемесячная выручка</h3>
+        {monthlyRevenue && monthlyRevenue.length > 0 ? (
+          <>
+            <div className={s.revenueChartContainer}>
+              {monthlyRevenue.map((item) => (
+                <div key={item.month} className={s.revenueBarWrapper}>
+                  <div className={s.barLabel}>
+                    {formatMonth(item.month).toLowerCase()}
+                  </div>
+                  <div
+                    className={s.revenueBar}
+                    style={{
+                      height: `${
+                        (parseFloat(item.revenue) / maxRevenue) * 180
+                      }px`,
+                    }}
+                  ></div>
+                  <div className={s.barValue}>
+                    ₽{formatNumber(item.revenue)}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={s.revenueTableContainer}>
+              <div className={s.tableHeader}>
+                <span>Месяц</span>
+                <span>Выручка</span>
+              </div>
+              {monthlyRevenue.map((item) => (
+                <div key={item.month} className={s.tableRow}>
+                  <span>{formatMonth(item.month).toLowerCase()}</span>
+                  <span className={s.revenueAmount}>
+                    ₽{formatNumber(item.revenue)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <p>Нет данных о ежемесячной выручке</p>
+        )}
       </div>
     </div>
   );

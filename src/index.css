@@ -1,5 +1,7 @@
 :root {
   /* Light theme (default) */
+  --bg-back-btn: #a970e0;
+  --bg-back-btn-hover: #a970e0;
   --primary-color: #a970e0;
   --secondary-color: #c18ef0;
   --wrapper-color: #fff;
@@ -13,45 +15,53 @@
   --success-color: #00b574;
   --success-type: #ffffff;
   --error-color: #f44336;
-  --error-type: #ffffff; 
-  --info-color: #4c88db;  /* Slightly muted blue for info */
+  --error-type: #ffffff;
+  --info-color: #4c88db; /* Slightly muted blue for info */
   --info-type: #ffffff;
   --warning-color: #ff9800;
   --warning-type: #fff;
   --pending-color: #a970e0;
   --pending-type: #ffffff;
-  --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32),0px 2px 2px 0px rgba(141, 141, 141, 0.08);
-  font-family: 'Nunito Sans', sans-serif;
-  
+  --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32),
+    0px 2px 2px 0px rgba(141, 141, 141, 0.08);
+  font-family: "Nunito Sans", sans-serif;
+
   /* Skeleton colors - light theme */
   --skeleton-start-color: #f0f0f0;
   --skeleton-middle-color: #e0e0e0;
 }
 
 /* Dark theme */
-[data-theme='dark'] {
-  --primary-color: #c084fc;  /* Vibrant purple that stands out in dark mode */
-  --secondary-color: #a855f7;  /* Slightly darker purple for secondary elements */
-  --wrapper-color: #161A1D;  /* Deep blue-purple background for content areas */
-  --text-color-light: #f8fafc;  /* Very light gray with slight blue tint for main text */
-  --text-color-dark: #bbc2cc;  /* Lighter gray for secondary text */
-  --bg-color: #131516;  /* Deep blue-black for main background */
-  --secondary-bg-color: rgb(29, 27, 31);  /* Slightly lighter than wrapper for secondary elements */
-  --card-bg: #22272B;  /* Slightly lighter than wrapper for cards */
-  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);  /* Stronger shadow for depth */
-  --border-color: #383854;  /* Subtle border color with purple tint */
+[data-theme="dark"] {
+  --bg-back-btn: #161a1dc4;
+  --bg-back-btn-hover: #161a1d;
+  --primary-color: #c084fc; /* Vibrant purple that stands out in dark mode */
+  --secondary-color: #a855f7; /* Slightly darker purple for secondary elements */
+  --wrapper-color: #161a1d; /* Deep blue-purple background for content areas */
+  --text-color-light: #f8fafc; /* Very light gray with slight blue tint for main text */
+  --text-color-dark: #bbc2cc; /* Lighter gray for secondary text */
+  --bg-color: #131516; /* Deep blue-black for main background */
+  --secondary-bg-color: rgb(
+    29,
+    27,
+    31
+  ); /* Slightly lighter than wrapper for secondary elements */
+  --card-bg: #22272b; /* Slightly lighter than wrapper for cards */
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
+  --border-color: #383854; /* Subtle border color with purple tint */
   --success-color: #15392d;
-  --success-type: #10AE79;  /* Bright green that's visible on dark backgrounds */
-  --error-color: #d43e3e;  /* Soft red that's not too harsh */
-  --error-type: #ffc8c8; 
-  --info-color: #1853a5;  /* Slightly muted blue for info */
+  --success-type: #10ae79; /* Bright green that's visible on dark backgrounds */
+  --error-color: #d43e3e; /* Soft red that's not too harsh */
+  --error-type: #ffc8c8;
+  --info-color: #1853a5; /* Slightly muted blue for info */
   --info-type: #8dbcff;
-  --warning-color: #a77d12;  /* Warm amber for warnings */
+  --warning-color: #a77d12; /* Warm amber for warnings */
   --warning-type: #ffe9b2;
   --pending-color: #8739cf;
   --pending-type: #d5bbee;
-  --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32),0px 2px 2px 0px rgba(0, 0, 0, 0.08);
-  
+  --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+
   /* Skeleton colors - dark theme */
   --skeleton-start-color: #1a1d20;
   --skeleton-middle-color: #2d2f31;

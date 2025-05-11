@@ -7,6 +7,8 @@ import { addToCart } from "../../store/slices/cartSlice";
 import MenuItemCard from "../../components/MenuItemCard";
 import RestaurantPageSkeleton from "../../components/SkeletonLoader/RestaurantPageSkeleton";
 import menuPlaceholder from "/menu.png"; // Import the menu placeholder image
+import BackButton from "../../ui/BackButton/BackButton";
+
 import s from "./RestaurantPage.module.scss";
 
 const Restaurants = () => {
@@ -71,6 +73,8 @@ const Restaurants = () => {
           className={s.heroImage}
           style={{ backgroundImage: `url(${restaurant.image_url})` }}
         />
+
+        <BackButton />
         <div className={s.heroContent}>
           <h1 className={s.restaurantTitle}>{restaurant.name}</h1>
         </div>

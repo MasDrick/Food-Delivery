@@ -1,25 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Navigate } from "react-router";
-import { Users, ShoppingBag, Settings, BarChart2 } from "lucide-react";
+import { Navigate, useNavigate } from "react-router";
+import { Users, ShoppingBag, Settings as SettingsIcon, BarChart2 } from "lucide-react";
 import { fetchDashboardData } from "../../store/slices/dashboardSlice";
 import { fetchAdminOrders } from "../../store/slices/adminOrdersSlice";
+import { fetchUserProfile } from "../../store/slices/profileSlice";
 import s from "./Admin.module.scss";
-import Dashboard from "./Dashboard"; // Import the Dashboard component
-import Orders from "./Orders"; // Import the Orders component
+import Dashboard from "./Dashboard"; 
+import Orders from "./Orders"; 
+import UsersManagement from "./Users"; 
+import Settings from "./Settings"; 
 
 const AdminPanel = () => {
-  const { userProfile } = useSelector((state) => state.profile || {});
+  const { userProfile, loading: profileLoading } = useSelector((state) => state.profile || {});
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  // Check authentication on page load
   useEffect(() => {
-    if (activeTab === "dashboard") {
-      dispatch(fetchDashboardData());
-    } else if (activeTab === "orders") {
-      dispatch(fetchAdminOrders());
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/');
+      return;
     }
-  }, [activeTab, dispatch]);
+
+    // Fetch user profile if not available
+    if (!userProfile) {
+      dispatch(fetchUserProfile())
+        .unwrap()
+        .then(profile => {
+          if (profile.role !== 'admin') {
+            navigate('/');
+          }
+          setIsLoading(false);
+        })
+        .catch(() => {
+          navigate('/');
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch, navigate, userProfile]);
+
+  // Load data based on active tab
+  useEffect(() => {
+    if (!isLoading && userProfile?.role === 'admin') {
+      if (activeTab === "dashboard") {
+        dispatch(fetchDashboardData());
+      } else if (activeTab === "orders") {
+        dispatch(fetchAdminOrders());
+      }
+    }
+  }, [activeTab, dispatch, isLoading, userProfile]);
+
+  // Show loading while checking authentication
+  if (isLoading || profileLoading) {
+    return <div className={s.loadingContainer}>Загрузка...</div>;
+  }
 
   // Check if user is admin
   if (!userProfile || userProfile.role !== "admin") {
@@ -33,21 +72,9 @@ const AdminPanel = () => {
       case "orders":
         return <Orders />;
       case "users":
-        return (
-          <div className={s.usersContent}>
-            <h2>Управление пользователями</h2>
-            <p>
-              Здесь будет список пользователей и возможность управления ими.
-            </p>
-          </div>
-        );
+        return <UsersManagement />;
       case "settings":
-        return (
-          <div className={s.settingsContent}>
-            <h2>Настройки</h2>
-            <p>Здесь будут настройки администратора.</p>
-          </div>
-        );
+        return <Settings />;
       default:
         return <div>Выберите раздел</div>;
     }
@@ -89,7 +116,7 @@ const AdminPanel = () => {
             }`}
             onClick={() => setActiveTab("settings")}
           >
-            <Settings size={20} />
+            <SettingsIcon size={20} />
             <span>Настройки</span>
           </button>
         </nav>

@@ -1,26 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router';
-import { UserRound, ShoppingCart, ChefHat, Menu, X, Settings, ChevronDown, LogOut } from 'lucide-react';
-import Button from '../../ui/Button';
-import { logoutUser } from '../../store/slices/authSlice';
-import s from './header.module.scss'; 
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router";
+import {
+  UserRound,
+  ShoppingCart,
+  ChefHat,
+  Menu,
+  X,
+  Settings,
+  ChevronDown,
+  LogOut,
+} from "lucide-react";
+import Button from "../../ui/Button";
+import { logoutUser } from "../../store/slices/authSlice";
+import s from "./header.module.scss";
 
 const Header = () => {
-  const [activeLink, setActiveLink] = useState(0); 
+  const [activeLink, setActiveLink] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation(); // Get current location
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const { userProfile, isLoading: profileLoading } = useSelector((state) => state.profile || {});
+  const { userProfile, isLoading: profileLoading } = useSelector(
+    (state) => state.profile || {}
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-  const isAdmin = userProfile?.role === 'admin';
-  
+
+  const isAdmin = userProfile?.role === "admin";
+
   // Get the username to display in the header
-  const displayName = user?.username || 'Пользователь';
+  const displayName = user?.username || "Пользователь";
 
   // Add a useEffect to fetch the user profile if needed
   useEffect(() => {
@@ -30,15 +41,15 @@ const Header = () => {
       // dispatch(fetchUserProfile());
     }
   }, [isAuthenticated, userProfile, profileLoading, dispatch]);
-  
+
   // Update active link based on current path when component mounts or path changes
   useEffect(() => {
     const path = location.pathname;
-    if (path === '/') {
+    if (path === "/") {
       setActiveLink(0);
-    } else if (path === '/cart') {
+    } else if (path === "/cart") {
       setActiveLink(1);
-    } else if (path === '/profile' || path === '/admin') {
+    } else if (path === "/profile" || path === "/admin") {
       setActiveLink(2);
     }
   }, [location.pathname]);
@@ -53,19 +64,37 @@ const Header = () => {
     setActiveLink(index);
   };
 
+  const formatPrice = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  };
+
+  // Получаем корзину из Redux
+  const cart = useSelector((state) => state.cart.restaurants);
+
+  // Считаем общую сумму товаров в корзине
+  const totalCartPrice = Object.values(cart).reduce((total, restaurant) => {
+    return (
+      total +
+      Object.values(restaurant.items || {}).reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      )
+    );
+  }, 0);
+
   // Handle logout
   const handleLogout = () => {
     dispatch(logoutUser());
-    navigate('/');
+    navigate("/");
   };
 
   // Add these navigation functions
   const handleRegister = () => {
-    navigate('/register');
+    navigate("/register");
   };
 
   const handleLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   // Toggle dropdown
@@ -79,10 +108,10 @@ const Header = () => {
     const handleClickOutside = () => {
       setIsDropdownOpen(false);
     };
-    
-    document.addEventListener('click', handleClickOutside);
+
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -102,15 +131,16 @@ const Header = () => {
         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
       </div>
 
-      <div className={`${s.menuContainer} ${mobileMenuOpen ? s.open : ''}`}>
+      <div className={`${s.menuContainer} ${mobileMenuOpen ? s.open : ""}`}>
         {isAuthenticated ? (
           <div className={s.menu}>
             <ul className={s.nav}>
               <li>
                 <Link
                   to="/"
-                  className={activeLink === 0 ? s.active : ''}
-                  onClick={() => handleLinkClick(0)}>
+                  className={activeLink === 0 ? s.active : ""}
+                  onClick={() => handleLinkClick(0)}
+                >
                   <ChefHat size={18} />
                   <span>Рестораны</span>
                 </Link>
@@ -118,30 +148,40 @@ const Header = () => {
               <li>
                 <Link
                   to="/cart"
-                  className={activeLink === 1 ? s.active : ''}
-                  onClick={() => handleLinkClick(1)}>
+                  className={activeLink === 1 ? s.active : ""}
+                  onClick={() => handleLinkClick(1)}
+                >
                   <ShoppingCart size={18} />
-                  <span>Корзина</span>
+                  <span>
+                    {totalCartPrice > 0
+                      ? `${formatPrice(totalCartPrice)} ₽`
+                      : "Корзина"}
+                  </span>
                 </Link>
               </li>
               {isAdmin ? (
-                <li className={s.adminDropdown} onClick={(e) => e.stopPropagation()}>
-                  <div 
+                <li
+                  className={s.adminDropdown}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div
                     className={`${s.dropdownToggle} ${s.admin} ${
-                      activeLink === 2 || location.pathname === '/admin' ? s.active : ''
-                    }`} 
+                      activeLink === 2 || location.pathname === "/admin"
+                        ? s.active
+                        : ""
+                    }`}
                     onClick={toggleDropdown}
                   >
                     <UserRound size={18} />
                     <span>{displayName}</span>
                     <ChevronDown size={16} />
                   </div>
-                  
+
                   {isDropdownOpen && (
                     <div className={s.dropdownMenu}>
-                      <Link 
-                        to="/profile" 
-                        className={s.dropdownItem} 
+                      <Link
+                        to="/profile"
+                        className={s.dropdownItem}
                         onClick={() => {
                           setIsDropdownOpen(false);
                           handleLinkClick(2);
@@ -150,9 +190,9 @@ const Header = () => {
                         <UserRound size={16} />
                         <span>Профиль</span>
                       </Link>
-                      <Link 
-                        to="/admin" 
-                        className={`${s.dropdownItem} ${s.adminItem}`} 
+                      <Link
+                        to="/admin"
+                        className={`${s.dropdownItem} ${s.adminItem}`}
                         onClick={() => {
                           setIsDropdownOpen(false);
                           // Don't set activeLink here to keep the dropdown highlighted
@@ -168,23 +208,23 @@ const Header = () => {
                 <li>
                   <Link
                     to="/profile"
-                    className={activeLink === 2 ? s.active : ''}
-                    onClick={() => handleLinkClick(2)}>
+                    className={activeLink === 2 ? s.active : ""}
+                    onClick={() => handleLinkClick(2)}
+                  >
                     <UserRound size={18} />
                     <span>{displayName}</span>
                   </Link>
                 </li>
               )}
             </ul>
-            <Button name={'Выйти'} onClick={handleLogout} />
-            
+            <Button name={"Выйти"} onClick={handleLogout} />
+
             {/* Add theme toggle button */}
-           
           </div>
         ) : (
           <div className={s.authButtons}>
-            <Button name={'Регистрация'} onClick={handleRegister} />
-            <Button name={'Войти'} onClick={handleLogin} />
+            <Button name={"Регистрация"} onClick={handleRegister} />
+            <Button name={"Войти"} onClick={handleLogin} />
           </div>
         )}
       </div>

@@ -25,12 +25,7 @@ const LoginForm = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // Show error alert when error state changes
-  useEffect(() => {
-    if (error) {
-      alert(error.message || 'Ошибка авторизации');
-    }
-  }, [error]);
+  // Remove the error alert useEffect
 
   const initialValues = {
     email: "",
@@ -48,18 +43,7 @@ const LoginForm = () => {
     const resultAction = await dispatch(loginUser(values));
 
     if (loginUser.rejected.match(resultAction)) {
-      // Show only one alert - prioritize the general message
-      if (resultAction.payload?.message) {
-        alert(resultAction.payload.message);
-      } else if (resultAction.payload?.errors && resultAction.payload.errors.length > 0) {
-        // If no general message, show the first meaningful field error
-        const firstError = resultAction.payload.errors.find(err => err.msg && err.msg.trim() !== '');
-        if (firstError) {
-          alert(firstError.msg);
-        }
-      }
-      
-      // Still set form errors for field validation display
+      // Set form errors for field validation display
       if (resultAction.payload?.errors) {
         const formErrors = {};
         resultAction.payload.errors.forEach((err) => {
@@ -69,10 +53,8 @@ const LoginForm = () => {
         });
         setErrors(formErrors);
       }
-    } else if (loginUser.fulfilled.match(resultAction)) {
-      // Show success alert
-      alert('Вы успешно вошли в систему!');
     }
+    // Remove success alert
 
     setSubmitting(false);
   };
@@ -96,14 +78,7 @@ const LoginForm = () => {
           <Form className={s.loginForm}>
             <h2 className={s.title}>Вход в аккаунт</h2>
 
-            {error && !error.errors && (
-              <div
-                className={s.error}
-                style={{ marginBottom: "15px", textAlign: "center" }}
-              >
-                {error.message || "Ошибка авторизации"}
-              </div>
-            )}
+            {/* Remove the error display div */}
 
             <div className={s.formGroup}>
               <label htmlFor="email" className={s.label}>

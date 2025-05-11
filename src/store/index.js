@@ -4,11 +4,13 @@ import restaurantReducer from "./slices/restaurantSlice";
 import categoriesReducer from "./slices/categoriesSlice";
 import profileReducer from "./slices/profileSlice"; // Changed from profileSlice to profileslice
 import themeReducer from "./slices/themeSlice";
-import cartReducer from "./slices/cartSlice";
+import cartReducer, { cartLocalStorageMiddleware } from "./slices/cartSlice";
 import orderReducer from "./slices/orderSlice";
 import notificationReducer from "./slices/notificationSlice";
 import dashboardReducer from "./slices/dashboardSlice";
 import adminOrdersReducer from "./slices/adminOrdersSlice";
+import adminUsersReducer from "./slices/adminUsersSlice";
+import messageReducer from "./features/messages/messageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,11 +24,13 @@ export const store = configureStore({
     notification: notificationReducer,
     dashboard: dashboardReducer,
     adminOrders: adminOrdersReducer,
+    adminUsers: adminUsersReducer,
+    messages: messageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(cartLocalStorageMiddleware),
 });
 
 export default store;
