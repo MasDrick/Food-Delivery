@@ -11,6 +11,7 @@ import dashboardReducer from "./slices/dashboardSlice";
 import adminOrdersReducer from "./slices/adminOrdersSlice";
 import adminUsersReducer from "./slices/adminUsersSlice";
 import messageReducer from "./features/messages/messageSlice";
+import courierReducer from "./slices/courierSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     adminOrders: adminOrdersReducer,
     adminUsers: adminUsersReducer,
     messages: messageReducer,
+    courier: courierReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

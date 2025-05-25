@@ -7,11 +7,11 @@
   transition: all 0.3s ease;
   overflow: hidden;
   border: 1px solid var(--border-color);
-  
+
   &:hover {
     box-shadow: 0 8px 30px rgba(169, 112, 224, 0.15);
   }
-  
+
   &.expanded {
     box-shadow: 0 12px 40px rgba(169, 112, 224, 0.2);
   }
@@ -35,7 +35,7 @@
   gap: 8px;
   color: var(--primary-color);
   cursor: pointer;
-  
+
   svg {
     stroke-width: 2px;
   }
@@ -45,7 +45,7 @@
   font-weight: 700;
   font-size: 18px;
   position: relative;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -56,7 +56,7 @@
     background-color: var(--primary-color);
     transition: width 0.3s ease;
   }
-  
+
   .orderNumberWrapper:hover & {
     &::after {
       width: 100%;
@@ -70,7 +70,7 @@
   gap: 6px;
   color: var(--text-color-dark);
   margin-bottom: 16px;
-  
+
   svg {
     opacity: 0.7;
   }
@@ -103,6 +103,11 @@
   color: var(--pending-type);
 }
 
+.statusTransferring {
+  background: var(--transfering-color);
+  color: var(--transfering-type);
+}
+
 .statusDelivering {
   background: var(--info-color);
   color: var(--info-type);
@@ -125,13 +130,14 @@
   margin-bottom: 16px;
 }
 
-.addressInfo, .phoneInfo {
+.addressInfo,
+.phoneInfo {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 15px;
   color: var(--text-color-dark);
-  
+
   svg {
     color: var(--primary-color);
   }
@@ -163,7 +169,7 @@
   gap: 6px;
   width: 100%;
   padding: 10px;
-  
+
   background: rgba(169, 112, 224, 0.05);
   border: none;
   border-top: 1px solid var(--border-color);
@@ -171,11 +177,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
-  
+
   &:hover {
     background: var(--border-color);
   }
-  
+
   span {
     font-size: 14px;
   }
@@ -188,8 +194,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .commentSection {
@@ -197,13 +209,13 @@
   border-radius: 12px;
   padding: 16px;
   margin: 20px 0;
-  
+
   h4 {
     font-size: 16px;
     margin-bottom: 8px;
     color: var(--primary-color);
   }
-  
+
   p {
     font-size: 15px;
     line-height: 1.4;
@@ -236,11 +248,10 @@
   justify-content: space-between;
   padding: 14px 16px;
   border-bottom: 1px solid var(--border-color);
-  
+
   &:last-child {
     border-bottom: none;
   }
-
 }
 
 .itemInfo {
@@ -299,7 +310,7 @@
   justify-content: space-between;
   padding: 8px 0;
   font-size: 15px;
-  
+
   &:not(:last-child) {
     border-bottom: 1px dashed var(--border-color);
   }
@@ -318,32 +329,45 @@
     align-items: flex-start;
     gap: 12px;
   }
-  
+
   .statusBadge {
     align-self: flex-start;
   }
-  
+
   .summaryInfo {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .itemPricing {
     flex-direction: column;
     align-items: flex-end;
     gap: 6px;
   }
-  
+
   .expandedContent {
     padding: 0 16px 16px;
   }
 }
 
-// Add these new styles to your existing file
+.statusAndCourier {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 12px;
+}
+
+.courierInfo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-color-dark);
+  font-size: 14px;
+}
 
 .discountRow {
   color: var(--color-dark);
-  
+
   span:last-child {
     display: flex;
     color: rgb(0, 184, 0);

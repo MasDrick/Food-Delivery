@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import {
-  Search,
-  Filter,
-  ArrowUpDown,
-  Calendar,
-  MapPin,
-  User,
-  Package,
-  Clock,
-} from "lucide-react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Filter, ArrowUpDown, Calendar, MapPin, User, Package, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import {
   fetchAdminOrders,
   updateOrderStatus,
   filterOrders,
   searchOrders,
   sortOrders,
-} from "../../store/slices/adminOrdersSlice";
-import s from "./Admin.module.scss";
+} from '../../store/slices/adminOrdersSlice';
+import s from './Admin.module.scss';
 
 const Orders = () => {
   const dispatch = useDispatch();
-  const { filteredOrders, loading, error, activeFilter, statusOptions } =
-    useSelector((state) => state.adminOrders);
+  const { filteredOrders, loading, error, activeFilter, statusOptions } = useSelector(
+    (state) => state.adminOrders,
+  );
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [expandedOrders, setExpandedOrders] = useState({});
   const [sortConfig, setSortConfig] = useState({
-    field: "date",
-    direction: "desc",
+    field: 'date',
+    direction: 'desc',
   });
   const navigate = useNavigate();
 
@@ -55,21 +47,17 @@ const Orders = () => {
 
   const handleSort = (field) => {
     const direction =
-      sortConfig.field === field && sortConfig.direction === "desc"
-        ? "asc"
-        : "desc";
+      sortConfig.field === field && sortConfig.direction === 'desc' ? 'asc' : 'desc';
     setSortConfig({ field, direction });
     dispatch(sortOrders({ field, direction }));
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await dispatch(
-        updateOrderStatus({ orderId, status: newStatus })
-      ).unwrap();
+      await dispatch(updateOrderStatus({ orderId, status: newStatus })).unwrap();
       // Optional: Show success notification
     } catch (error) {
-      console.error("Failed to update status:", error);
+      console.error('Failed to update status:', error);
       // Optional: Show error notification
     }
   };
@@ -84,27 +72,25 @@ const Orders = () => {
   // Format date for display
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("ru-RU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+    return date.toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
   // Translate status to Russian
   const getStatusText = (status) => {
-    const statusOption = statusOptions.find(
-      (option) => option.value === status
-    );
+    const statusOption = statusOptions.find((option) => option.value === status);
     return statusOption ? statusOption.label : status;
   };
 
   // Format number with spaces
   const formatNumber = (value) => {
-    const numValue = typeof value === "string" ? parseFloat(value) : value;
-    return numValue.toLocaleString("ru-RU");
+    const numValue = typeof value === 'string' ? parseFloat(value) : value;
+    return numValue.toLocaleString('ru-RU');
   };
 
   if (loading && filteredOrders.length === 0) {
@@ -117,9 +103,8 @@ const Orders = () => {
 
   return (
     <div className={s.ordersManagementContent}>
-      <h2>Управление заказами</h2>
-
-      <div className={s.ordersControls}>
+      <div className={s.ordersHeader}>
+        <h2>Управление заказами</h2>
         <div className={s.searchContainer}>
           <Search size={18} className={s.searchIcon} />
           <input
@@ -130,26 +115,24 @@ const Orders = () => {
             className={s.searchInput}
           />
         </div>
+      </div>
 
+      <div className={s.ordersControls}>
         <div className={s.filterContainer}>
           <Filter size={18} className={s.filterIcon} />
           <div className={s.filterButtons}>
             <button
-              className={`${s.filterButton} ${
-                activeFilter === "all" ? s.active : ""
-              }`}
-              onClick={() => handleFilterChange("all")}
-            >
+              className={`${s.filterButton} ${activeFilter === 'all' ? s.active : ''}`}
+              onClick={() => handleFilterChange('all')}>
               Все
             </button>
             {statusOptions.map((option) => (
               <button
                 key={option.value}
                 className={`${s.filterButton} ${s[option.value]} ${
-                  activeFilter === option.value ? s.active : ""
+                  activeFilter === option.value ? s.active : ''
                 }`}
-                onClick={() => handleFilterChange(option.value)}
-              >
+                onClick={() => handleFilterChange(option.value)}>
                 {option.label}
               </button>
             ))}
@@ -158,18 +141,18 @@ const Orders = () => {
       </div>
 
       <div className={s.ordersSortHeader}>
-        <div className={s.sortColumn} onClick={() => handleSort("id")}>
+        <div className={s.sortColumn} onClick={() => handleSort('id')}>
           <span>#ID</span>
           <ArrowUpDown size={14} className={s.sortIcon} />
         </div>
-        <div className={s.sortColumn} onClick={() => handleSort("date")}>
+        <div className={s.sortColumn} onClick={() => handleSort('date')}>
           <span>Дата</span>
           <ArrowUpDown size={14} className={s.sortIcon} />
         </div>
         <div className={s.sortColumn}>
           <span>Клиент</span>
         </div>
-        <div className={s.sortColumn} onClick={() => handleSort("amount")}>
+        <div className={s.sortColumn} onClick={() => handleSort('amount')}>
           <span>Сумма</span>
           <ArrowUpDown size={14} className={s.sortIcon} />
         </div>
@@ -187,10 +170,7 @@ const Orders = () => {
             <div key={order.id} className={s.orderItem}>
               <div className={s.orderWrap}>
                 <div className={s.orderSummary}>
-                  <div
-                    className={s.orderNumber}
-                    onClick={(e) => handleOrderClick(e, order.id)}
-                  >
+                  <div className={s.orderNumber} onClick={(e) => handleOrderClick(e, order.id)}>
                     <span className={s.orderNumber}>#{order.id}</span>
                   </div>
                   <div className={s.orderDate}>
@@ -201,9 +181,7 @@ const Orders = () => {
                     <User size={14} />
                     <span>{order.user_name}</span>
                   </div>
-                  <div className={s.orderAmount}>
-                    ₽{formatNumber(order.total_amount)}
-                  </div>
+                  <div className={s.orderAmount}>₽{formatNumber(order.total_amount)}</div>
                   <div className={`${s.orderStatus} ${s[order.status]}`}>
                     {getStatusText(order.status)}
                   </div>
@@ -215,36 +193,23 @@ const Orders = () => {
                         handleStatusChange(order.id, e.target.value);
                       }}
                       className={s.statusSelect}
-                      disabled={
-                        order.status === "completed" ||
-                        order.status === "cancelled"
-                      }
-                    >
+                      disabled={order.status === 'completed' || order.status === 'cancelled'}>
                       {statusOptions.map((option) => (
                         <option
                           key={option.value}
                           value={option.value}
                           disabled={
-                            (order.status === "completed" ||
-                              order.status === "cancelled") &&
+                            (order.status === 'completed' || order.status === 'cancelled') &&
                             order.status !== option.value
-                          }
-                        >
+                          }>
                           {option.label}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
-                <button
-                  className={s.expandButton}
-                  onClick={() => toggleOrderExpand(order.id)}
-                >
-                  {expandedOrders[order.id] ? (
-                    <ChevronUp size={16} />
-                  ) : (
-                    <ChevronDown size={16} />
-                  )}
+                <button className={s.expandButton} onClick={() => toggleOrderExpand(order.id)}>
+                  {expandedOrders[order.id] ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   <span>Показать детали</span>
                 </button>
               </div>
@@ -260,15 +225,19 @@ const Orders = () => {
                     <div className={s.infoRow}>
                       <Clock size={16} />
                       <span className={s.infoLabel}>Обновлен:</span>
-                      <span className={s.infoValue}>
-                        {formatDate(order.updated_at)}
-                      </span>
+                      <span className={s.infoValue}>{formatDate(order.updated_at)}</span>
                     </div>
                     <div className={s.infoRow}>
                       <Package size={16} />
                       <span className={s.infoLabel}>Рестораны:</span>
+                      <span className={s.infoValue}>{order.restaurant_count}</span>
+                    </div>
+                    {/* Add courier information here */}
+                    <div className={s.infoRow}>
+                      <User size={16} />
+                      <span className={s.infoLabel}>Курьер:</span>
                       <span className={s.infoValue}>
-                        {order.restaurant_count}
+                        {order.courier_username ? order.courier_username : '-'}
                       </span>
                     </div>
                     {order.comment && (
@@ -298,12 +267,7 @@ const Orders = () => {
                             <td>{item.restaurant_name}</td>
                             <td>{item.quantity}</td>
                             <td>₽{formatNumber(item.price)}</td>
-                            <td>
-                              ₽
-                              {formatNumber(
-                                parseFloat(item.price) * item.quantity
-                              )}
-                            </td>
+                            <td>₽{formatNumber(parseFloat(item.price) * item.quantity)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -318,9 +282,7 @@ const Orders = () => {
                           <td colSpan="4" className={s.totalLabel}>
                             Итого:
                           </td>
-                          <td className={s.totalAmount}>
-                            ₽{formatNumber(order.total_amount)}
-                          </td>
+                          <td className={s.totalAmount}>₽{formatNumber(order.total_amount)}</td>
                         </tr>
                       </tfoot>
                     </table>
@@ -330,9 +292,7 @@ const Orders = () => {
             </div>
           ))
         ) : (
-          <div className={s.noOrders}>
-            {searchTerm ? "Заказы не найдены" : "Нет заказов"}
-          </div>
+          <div className={s.noOrders}>{searchTerm ? 'Заказы не найдены' : 'Нет заказов'}</div>
         )}
       </div>
     </div>

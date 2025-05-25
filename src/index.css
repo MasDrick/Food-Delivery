@@ -1,5 +1,7 @@
 :root {
   /* Light theme (default) */
+  --transfering-color: #ff3ade98; /* Bright yellow for transfering */
+  --transfering-type: #ffffff; /* White text on transfering background */
   --bg-back-btn: #a970e0;
   --bg-back-btn-hover: #a970e0;
   --primary-color: #a970e0;
@@ -22,9 +24,8 @@
   --warning-type: #fff;
   --pending-color: #a970e0;
   --pending-type: #ffffff;
-  --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32),
-    0px 2px 2px 0px rgba(141, 141, 141, 0.08);
-  font-family: "Nunito Sans", sans-serif;
+  --shadow: 0px 2px 12px 0px rgba(141, 141, 141, 0.32), 0px 2px 2px 0px rgba(141, 141, 141, 0.08);
+  font-family: 'Nunito Sans', sans-serif;
 
   /* Skeleton colors - light theme */
   --skeleton-start-color: #f0f0f0;
@@ -32,7 +33,9 @@
 }
 
 /* Dark theme */
-[data-theme="dark"] {
+[data-theme='dark'] {
+  --transfering-color: #ff3ade98; /* Bright yellow for transfering */
+  --transfering-type: #ffbee9; /* Black text on transfering background */
   --bg-back-btn: #161a1dc4;
   --bg-back-btn-hover: #161a1d;
   --primary-color: #c084fc; /* Vibrant purple that stands out in dark mode */
@@ -41,11 +44,7 @@
   --text-color-light: #f8fafc; /* Very light gray with slight blue tint for main text */
   --text-color-dark: #bbc2cc; /* Lighter gray for secondary text */
   --bg-color: #131516; /* Deep blue-black for main background */
-  --secondary-bg-color: rgb(
-    29,
-    27,
-    31
-  ); /* Slightly lighter than wrapper for secondary elements */
+  --secondary-bg-color: rgb(29, 27, 31); /* Slightly lighter than wrapper for secondary elements */
   --card-bg: #22272b; /* Slightly lighter than wrapper for cards */
   --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
   --border-color: #383854; /* Subtle border color with purple tint */
@@ -59,8 +58,7 @@
   --warning-type: #ffe9b2;
   --pending-color: #8739cf;
   --pending-type: #d5bbee;
-  --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+  --shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.32), 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
 
   /* Skeleton colors - dark theme */
   --skeleton-start-color: #1a1d20;

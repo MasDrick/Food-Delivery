@@ -8,11 +8,46 @@
 
 .profileHeader {
   margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
 
   h1 {
     font-size: 28px;
     font-weight: 700;
     color: var(--text-color-light) !important;
+  }
+
+  li {
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-color-light);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: var(--primary-color);
+        background-color: rgba(189, 145, 196, 0.1);
+      }
+
+      span {
+        font-size: 16px;
+        margin-top: 2.5px;
+      }
+
+      &.active {
+        color: var(--primary-color);
+        background-color: rgba(198, 106, 212, 0.123);
+
+        svg {
+          color: var(--primary-color);
+        }
+      }
+    }
   }
 }
 
@@ -34,17 +69,13 @@
   overflow: hidden;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(
-      90deg,
-      var(--primary-color),
-      var(--secondary-color)
-    );
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   }
 }
 
@@ -128,7 +159,7 @@
     display: inline-block;
 
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: -5px;
       left: 0;

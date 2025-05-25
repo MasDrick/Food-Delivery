@@ -411,6 +411,18 @@
   color: white;
 }
 
+.ordersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
+
 .pending {
   background-color: var(--warning-color);
   color: var(--warning-type);
@@ -419,6 +431,11 @@
 .processing {
   background-color: var(--pending-color);
   color: var(--pending-type);
+}
+
+.transferring {
+  background-color: var(--transfering-color);
+  color: var(--transfering-type);
 }
 
 .delivering {
@@ -652,12 +669,6 @@
 // Orders Management Styles
 .ordersManagementContent {
   padding: 20px;
-
-  h2 {
-    margin-bottom: 24px;
-    font-size: 24px;
-    font-weight: 600;
-  }
 }
 
 .ordersControls {
@@ -1233,11 +1244,7 @@
   font-weight: 600;
   border-radius: 50%;
   color: white;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
 }
 
 .userInfo {
@@ -1816,7 +1823,7 @@
 
   &:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 18px;
     width: 18px;
     left: 4px;

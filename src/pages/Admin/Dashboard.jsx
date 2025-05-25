@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
-import s from "./Admin.module.scss";
+import s from './Admin.module.scss';
 
 const Dashboard = () => {
   const {
@@ -35,33 +35,35 @@ const Dashboard = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("ru-RU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+    return date.toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     });
   };
 
   const formatMonth = (monthString) => {
-    const [year, month] = monthString.split("-");
+    const [year, month] = monthString.split('-');
     const date = new Date(year, month - 1);
-    return date.toLocaleDateString("ru-RU", { month: "long", year: "numeric" });
+    return date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
   };
 
   const getStatusText = (status) => {
     switch (status) {
-      case "pending":
-        return "В обработке";
-      case "processing":
-        return "Готовится";
-      case "delivering":
-        return "Доставляется";
-      case "completed":
-        return "Выполнен";
-      case "cancelled":
-        return "Отменен";
+      case 'pending':
+        return 'В обработке';
+      case 'processing':
+        return 'Готовится';
+      case 'delivering':
+        return 'Доставляется';
+      case 'completed':
+        return 'Выполнен';
+      case 'cancelled':
+        return 'Отменен';
+      case 'transferring':
+        return 'Передача';
       default:
         return status;
     }
@@ -73,16 +75,16 @@ const Dashboard = () => {
       : 0;
 
   const formatNumber = (value) => {
-    const numValue = typeof value === "string" ? parseFloat(value) : value;
-    return numValue.toLocaleString("ru-RU");
+    const numValue = typeof value === 'string' ? parseFloat(value) : value;
+    return numValue.toLocaleString('ru-RU');
   };
 
   const formatRegistrationDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("ru-RU", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
+    return date.toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
     });
   };
 
@@ -116,30 +118,19 @@ const Dashboard = () => {
               recentOrders.map((order) => (
                 <div key={order.id} className={s.orderItem}>
                   <div className={s.orderHeader}>
-                    <span
-                      onClick={() => handleOrderClick(order.id)}
-                      className={s.orderNumber}
-                    >
+                    <span onClick={() => handleOrderClick(order.id)} className={s.orderNumber}>
                       Заказ #{order.id}
                     </span>
-                    <span
-                      className={`${s.orderStatus} ${s[order.status]} ${s.mg}`}
-                    >
+                    <span className={`${s.orderStatus} ${s[order.status]} ${s.mg}`}>
                       {getStatusText(order.status)}
                     </span>
                   </div>
                   <div className={s.orderDetails}>
                     <div className={s.orderInfo}>
-                      <span className={s.orderDate}>
-                        {formatDate(order.created_at)}
-                      </span>
-                      <span className={s.orderUser}>
-                        Пользователь: {order.username}
-                      </span>
+                      <span className={s.orderDate}>{formatDate(order.created_at)}</span>
+                      <span className={s.orderUser}>Пользователь: {order.username}</span>
                     </div>
-                    <div className={s.orderAmount}>
-                      ₽{formatNumber(order.total_amount)}
-                    </div>
+                    <div className={s.orderAmount}>₽{formatNumber(order.total_amount)}</div>
                   </div>
                 </div>
               ))
@@ -156,12 +147,8 @@ const Dashboard = () => {
               {ordersByStatus && ordersByStatus.length > 0 ? (
                 ordersByStatus.map((item) => (
                   <div key={item.status} className={s.statusItem}>
-                    <div
-                      className={`${s.statusIndicator} ${s[item.status]}`}
-                    ></div>
-                    <span className={s.statusName}>
-                      {getStatusText(item.status)}
-                    </span>
+                    <div className={`${s.statusIndicator} ${s[item.status]}`}></div>
+                    <span className={s.statusName}>{getStatusText(item.status)}</span>
                     <span className={s.statusCount}>{item.count}</span>
                   </div>
                 ))
@@ -178,9 +165,7 @@ const Dashboard = () => {
                 topRestaurants.map((restaurant) => (
                   <div key={restaurant.id} className={s.restaurantItem}>
                     <span className={s.restaurantName}>{restaurant.name}</span>
-                    <span className={s.orderCount}>
-                      Заказов: {restaurant.order_count}
-                    </span>
+                    <span className={s.orderCount}>Заказов: {restaurant.order_count}</span>
                   </div>
                 ))
               ) : (
@@ -201,11 +186,7 @@ const Dashboard = () => {
                       className={s.topSpenderAvatar}
                     />
                   ) : (
-                    <img
-                      src="/user-round.svg"
-                      alt="Default user"
-                      className={s.topSpenderAvatar}
-                    />
+                    <img src="/user-round.svg" alt="Default user" className={s.topSpenderAvatar} />
                   )}
 
                   <div className={s.topSpenderName}>{topSpender.username}</div>
@@ -216,9 +197,7 @@ const Dashboard = () => {
                   <div className={s.topSpenderStatsRow}>
                     <div className={s.topSpenderStatItem}>
                       <span className={s.statLabel}>Заказов</span>
-                      <span className={s.statValue}>
-                        {topSpender.order_count}
-                      </span>
+                      <span className={s.statValue}>{topSpender.order_count}</span>
                     </div>
                     <div className={s.topSpenderStatItem}>
                       <span className={s.statLabel}>Потрачено</span>
@@ -229,8 +208,7 @@ const Dashboard = () => {
                   </div>
 
                   <div className={s.topSpenderDate}>
-                    С нами с{" "}
-                    {formatRegistrationDate(topSpender.registration_date)}
+                    С нами с {formatRegistrationDate(topSpender.registration_date)}
                   </div>
                 </div>
               </div>
@@ -247,20 +225,13 @@ const Dashboard = () => {
             <div className={s.revenueChartContainer}>
               {monthlyRevenue.map((item) => (
                 <div key={item.month} className={s.revenueBarWrapper}>
-                  <div className={s.barLabel}>
-                    {formatMonth(item.month).toLowerCase()}
-                  </div>
+                  <div className={s.barLabel}>{formatMonth(item.month).toLowerCase()}</div>
                   <div
                     className={s.revenueBar}
                     style={{
-                      height: `${
-                        (parseFloat(item.revenue) / maxRevenue) * 180
-                      }px`,
-                    }}
-                  ></div>
-                  <div className={s.barValue}>
-                    ₽{formatNumber(item.revenue)}
-                  </div>
+                      height: `${(parseFloat(item.revenue) / maxRevenue) * 180}px`,
+                    }}></div>
+                  <div className={s.barValue}>₽{formatNumber(item.revenue)}</div>
                 </div>
               ))}
             </div>
@@ -272,9 +243,7 @@ const Dashboard = () => {
               {monthlyRevenue.map((item) => (
                 <div key={item.month} className={s.tableRow}>
                   <span>{formatMonth(item.month).toLowerCase()}</span>
-                  <span className={s.revenueAmount}>
-                    ₽{formatNumber(item.revenue)}
-                  </span>
+                  <span className={s.revenueAmount}>₽{formatNumber(item.revenue)}</span>
                 </div>
               ))}
             </div>

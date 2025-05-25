@@ -13,8 +13,9 @@ import NotFound from './pages/NotFound';
 import OrderConfirmation from './pages/OrderConfirmation';
 import { checkAuthStatus } from './store/slices/authSlice';
 import s from './app.module.scss';
-import Admin from './pages/Admin';  // Add this import
+import Admin from './pages/Admin'; // Add this import
 import Notification from './components/Notification';
+import CourierOrders from './pages/Courier/CourierOrders';
 
 function App() {
   const dispatch = useDispatch();
@@ -37,14 +38,8 @@ function App() {
   if (isAuthPage) {
     return (
       <Routes>
-        <Route
-          path="/login"
-          element={!isAuthenticated ? <Login /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/register"
-          element={!isAuthenticated ? <Register /> : <Navigate to="/" />}
-        />
+        <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
+        <Route path="/register" element={!isAuthenticated ? <Register /> : <Navigate to="/" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     );
@@ -63,12 +58,16 @@ function App() {
         {/* Защищенные маршруты */}
         <Route path="/cart" element={isAuthenticated ? <Cart /> : <Navigate to="/login" />} />
         <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} />
-        <Route path="/orders/:orderId" element={isAuthenticated ? <OrderConfirmation /> : <Navigate to="/login" />} />
-        
+        <Route
+          path="/orders/:orderId"
+          element={isAuthenticated ? <OrderConfirmation /> : <Navigate to="/login" />}
+        />
+
         {/* Admin route - add this */}
         <Route path="/admin" element={isAuthenticated ? <Admin /> : <Navigate to="/login" />} />
-        
+
         {/* 404 страница */}
+        <Route path="/courier/orders" element={<CourierOrders />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ThemeToggle />
