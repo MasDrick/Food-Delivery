@@ -16,6 +16,52 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
+.emptyState {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.emptyIllustration {
+  max-width: 300px;
+  margin-bottom: 24px;
+}
+
+.emptyImage {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(108, 99, 255, 0.2));
+}
+
+.emptyTitle {
+  font-size: 24px;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.emptyText {
+  font-size: 16px;
+  color: #666;
+  max-width: 500px;
+  margin-bottom: 24px;
+}
+
+.emptyButton {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.emptyButton:hover {
+  transform: translateY(-2px);
+}
 
 .loading {
   text-align: center;
@@ -36,7 +82,7 @@
 @media (max-width: 768px) {
   .container {
     padding: 20px;
-    
+
     .topSection {
       flex-direction: column-reverse;
       gap: 30px;
@@ -51,19 +97,19 @@
       flex-direction: column-reverse;
     }
   }
-  
+
   /* Style for two-column categories layout */
   :global(.categoriesList) {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
-    
+
     & > li:nth-child(odd) {
       text-align: left;
       margin-right: auto;
     }
-    
+
     & > li:nth-child(even) {
       text-align: right;
       margin-left: auto;
@@ -74,7 +120,7 @@
 @media (max-width: 480px) {
   .container {
     padding: 15px;
-    
+
     .restaurantsGrid {
       grid-template-columns: 1fr;
     }

@@ -49,7 +49,7 @@ const RegisterForm = () => {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const resultAction = await dispatch(registerUser(values));
-      
+
       if (registerUser.rejected.match(resultAction)) {
         // Set form errors for field validation display
         if (resultAction.payload?.errors) {
@@ -73,6 +73,13 @@ const RegisterForm = () => {
 
   return (
     <div className={s.registerContainer}>
+      <div className={s.logoContainer}>
+        <img src="/logo.svg" alt="logo" />
+        <div className={s.logoText}>
+          <h1>Порция Счастья</h1>
+          <p>С любовью к вашему столу!</p>
+        </div>
+      </div>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
